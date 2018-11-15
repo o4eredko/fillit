@@ -153,13 +153,12 @@ typedef struct				s_dancing_list
 	struct s_dancing_list 	*down;
 	struct s_dancing_list 	*left;
 	struct s_dancing_list 	*right;
-	void					**content;
-	size_t 					c_count;
-	size_t 					*c_size;
+	void					*content;
+	size_t 					c_size;
 	long 					cords[2];
 }							t_dancing_list;
 
 
-t_dancing_list				*ft_dlstnew(void const **content, size_t c_count, size_t *c_size, long *cords);
+t_dancing_list				*ft_dlstnew(void const *content, size_t c_size, long x, long y);
 
 #endif
