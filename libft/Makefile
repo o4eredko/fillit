@@ -72,6 +72,7 @@ SRC = ft_memset.c\
 	  ft_lstmap.c\
 	  ft_dlstnew.c\
 	  ft_find_elem.c\
+	  ft_insertdlst.c\
 	  get_next_line.c
 
 LIB = $(SRC:.c=.o)

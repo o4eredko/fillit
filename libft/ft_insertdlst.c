@@ -12,18 +12,25 @@
 
 #include "libft.h"
 
-static void create_header(t_dancing_list **list)
+static void	create_header(t_dlist **list)
 {
-    if (!*list)
-        *list = ft_dlstnew(0, 0, 0, 0);
+	if (!*list)
+		*list = ft_dlstnew(0, 0, 0, 0);
 }
 
-void    ft_insertdlst(t_dancing_list *elem, t_dancing_list *list)
+void		ft_insertdlst(t_dlist *elem, t_dlist *list)
 {
-    if (!list)
-        create_header(&list);
-    else
-    {
+	t_dlist	*node;
 
-    }
+	if (!list)
+		create_header(&list);
+	node = list;
+	node = ft_find_elem(list, elem->cords[0], elem->cords[1]);
+	node->up->down = elem;
+	if (node->down)
+		node->down->up = elem;
+	if (node->left)
+		node->left->right = elem;
+	if (node->right)
+		node->right->left = elem;
 }

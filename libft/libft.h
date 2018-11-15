@@ -105,5 +105,6 @@ typedef struct		s_dlist
 t_dlist				*ft_dlstnew(void const *content, size_t c_size,
 	long x, long y);
 t_dlist				*ft_find_elem(t_dlist *head, int x, int y);
+void				ft_insertdlst(t_dlist *elem, t_dlist *list);
 
 #endif
