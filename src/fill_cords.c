@@ -60,15 +60,15 @@ t_cords	*fill_cords(t_shape *elem)
 		{
 			if (elem->matrix[x][y] == '#')
 			{
-				CHECK_ERR((*(res->cords) = (int *)ft_memalloc(sizeof(int) * 2)));
-				*(res->cords)[0] = x;
-				*(res->cords)[1] = y;
-				(*res->cords)++;
+				CHECK_ERR((*res->cords = (int *)ft_memalloc(sizeof(int) * 2)));
+				(*res->cords)[0] = x;
+				(*res->cords)[1] = y;
+				res->cords++;
 			}
 		}
 	}
-	*(res->cords) -= 4;
-	move_cords(res->cords, 0);
+	res->cords -= 4;
+	// move_cords(res->cords, 0);
 	return (res);
 }
 
