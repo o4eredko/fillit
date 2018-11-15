@@ -100,9 +100,9 @@ typedef struct		s_dlist
 	void			*content;
 	size_t			c_size;
 	long			cords[2];
-}					t_dancing_list;
+}					t_dlist;
 
-t_dancing_list		*ft_dlstnew(void const *content, size_t c_size,
+t_dlist				*ft_dlstnew(void const *content, size_t c_size,
 	long x, long y);
 
 #endif

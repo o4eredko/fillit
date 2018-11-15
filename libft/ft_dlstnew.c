@@ -12,11 +12,11 @@
 
 #include "libft.h"
 
-t_dancing_list	*ft_dlstnew(void const *content, size_t c_size, long x, long y)
+t_dlist	*ft_dlstnew(void const *content, size_t c_size, long x, long y)
 {
-	t_dancing_list *res;
+	t_dlist *res;
 
-	CHECK((res = (t_dancing_list*)malloc(sizeof(t_dancing_list))));
+	CHECK((res = (t_dlist *)malloc(sizeof(t_dlist))));
 	res->c_size = (content) ? c_size : 0;
 	if (content)
 	{
