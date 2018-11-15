@@ -71,6 +71,7 @@ SRC = ft_memset.c\
 	  ft_lstiter.c\
 	  ft_lstmap.c\
 	  ft_dlstnew.c\
+	  get_next_line.c
 
 LIB = $(SRC:.c=.o)
 

@@ -13,7 +13,6 @@
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 # define BUFF_SIZE 150
-# define CHECK(x) if (!x)return (NULL)
 # include <stdlib.h>
 # include <unistd.h>
 
