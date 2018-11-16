@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_find_elem.c                                     :+:      :+:    :+:   */
+/*   ft_dlstgetend.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yochered <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dmatseku <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/15 16:29:20 by yochered          #+#    #+#             */
-/*   Updated: 2018/11/15 16:29:21 by yochered         ###   ########.fr       */
+/*   Created: 2018/11/16 10:46:39 by dmatseku          #+#    #+#             */
+/*   Updated: 2018/11/16 10:46:40 by dmatseku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_dlist	*ft_find_elem(t_dlist *head, int x, int y)
+t_dlist	*ft_dlstgetend(t_dlist	*list, char xy)
 {
-	CHECK((head));
-	while (head->right && head->cords[0] != x)
-		head = head->right;
-	while (head->down && head->cords[1] != y)
-		head = head->down;
-	return (head);
+	if (!list)
+		return (0);
+	if (!xy)
+	{
+		while (list->right)
+			list = list->right;
+		return (list);
+	}
+	while (list->down)
+		list = list->down;
+	return (list);
 }

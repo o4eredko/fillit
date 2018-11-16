@@ -1,36 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_insertdlst.c                                    :+:      :+:    :+:   */
+/*   ft_dlstgetn.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dmatseku <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/15 15:44:47 by dmatseku          #+#    #+#             */
-/*   Updated: 2018/11/15 15:45:02 by dmatseku         ###   ########.fr       */
+/*   Created: 2018/11/16 10:48:56 by dmatseku          #+#    #+#             */
+/*   Updated: 2018/11/16 10:49:00 by dmatseku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static void	create_header(t_dlist **list)
+t_dlist	*ft_dlstgetn(t_dlist *list, long n, char xy)
 {
-	if (!*list)
-		*list = ft_dlstnew(0, 0, 0, 0);
-}
+	long i;
 
-void		ft_insertdlst(t_dlist *elem, t_dlist *list)
-{
-	t_dlist	*node;
-
-	if (!list)
-		create_header(&list);
-	node = list;
-	node = ft_find_elem(list, elem->cords[0], elem->cords[1]);
-	node->up->down = elem;
-	if (node->down)
-		node->down->up = elem;
-	if (node->left)
-		node->left->right = elem;
-	if (node->right)
-		node->right->left = elem;
+	i = 0;
+	if (!xy)
+	{
+		while (i < n && list)
+		{
+			list = list->right;
+			i++;
+		}
+		return (list);
+	}
+	while (i < n && list)
+	{
+		list = list->down;
+		i++;
+	}
+	return (list);
 }
