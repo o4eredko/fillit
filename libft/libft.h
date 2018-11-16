@@ -102,9 +102,13 @@ typedef struct		s_dlist
 	long			cords[2];
 }					t_dlist;
 
-t_dlist				*ft_dlstnew(void const *content, size_t c_size,
-	long x, long y);
-t_dlist				*ft_find_elem(t_dlist *head, int x, int y);
-void				ft_insertdlst(t_dlist *elem, t_dlist *list);
+t_dlist				*ft_dlstfind(t_dlist *head, long x, long y);
+t_dlist				*ft_dlstgetend(t_dlist	*list, char xy);
+t_dlist				*ft_dlstgetn(t_dlist *list, long n, char xy);
+int					ft_dlstinsert(t_dlist **list, t_dlist *elem);
+t_dlist				*ft_dlstnew(void const *content, size_t c_size, long x, long y);
+void				ft_dlstprint(t_dlist *list);
+
+
 
 #endif
