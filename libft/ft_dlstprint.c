@@ -21,17 +21,28 @@ void	print_spaces(long count)
 		ft_putchar(' ');
 }
 
-void	ft_dlstprint(t_dlist *list)
+int		print_size(t_dlist *elem)
 {
-	t_dlist *tmp;
-	t_dlist *tmp1;
+	int i;
+	long j;
+	long res;
 
-	if (!list)
-	{
-		ft_putchar('0');
-		return ;
-	}
-	tmp = list;
+	i = 1;
+	j = 1;
+	res = *(long*)elem->content;
+	if (elem->c_size == sizeof(long))
+		while (res / j > 10)
+		{
+			i++;
+			j *= 10;
+		}
+	else
+		return (1);
+	return (i);
+}
+
+void	print_header(t_dlist *tmp)
+{
 	while (tmp)
 	{
 		if (tmp->c_size == sizeof(char))
@@ -39,28 +50,53 @@ void	ft_dlstprint(t_dlist *list)
 		else if (tmp->c_size == sizeof(int))
 			ft_putnbr(*(int*)tmp->content);
 		else if (tmp->c_size == sizeof(long))
-			printf("%d\n", (*(int*)tmp->content));
-		else
-			ft_putstr((char*)tmp->content);
+			ft_putlong(*(int*)tmp->content);
+		if (tmp->cords[0] != 0 || tmp->cords[1] != 0)
+			ft_putchar(' ');
 		tmp = tmp->right;
 	}
+}
+
+void	print_elem(t_dlist *tmp1, t_dlist *list)
+{
+	long i;
+	long j;
+	long k;
+
+	i = 0;
+	while (tmp1)
+	{
+		j = print_size(ft_dlstfind(list, tmp1->cords[X], 0));
+		i = (i) ? tmp1->cords[X] - i : tmp1->cords[X] - 1;
+		k = i * 2 + j - 1 - ((tmp1->left && (tmp1->left->cords[X]) < tmp1->cords[X]) ? 1 : 0);
+		if (i > 1)
+			print_spaces(k);
+		else if (!tmp1->left)
+			print_spaces(tmp1->cords[X] - 1 + j);
+		ft_putstr("1");
+		i = tmp1->cords[X];
+		if (tmp1->right && tmp1->right->cords[X] < tmp1->cords[X])
+			break ;
+		tmp1 = tmp1->right;
+	}
+}
+
+void	ft_dlstprint(t_dlist *list)
+{
+	t_dlist *tmp;
+
+	if (!list)
+	{
+		ft_putchar('0');
+		return ;
+	}
+	print_header(list);
 	tmp = list->down;
 	while (tmp)
 	{
 		ft_putchar('\n');
 		if (tmp->right)
-		{
-			tmp1 = tmp->right;
-			while (tmp1)
-			{
-				if (tmp1->left && tmp1->cords[0] - tmp1->left->cords[0] != 1)
-					print_spaces(tmp1->cords[0] - tmp1->left->cords[0] > 1);
-				else if (!tmp1->left)
-					print_spaces(tmp1->cords[0] - 1);
-				ft_putchar('1');
-				tmp1 = tmp1->right;
-			}
-		}
+			print_elem(tmp->right, list);
 		tmp = tmp->down;
 	}
 }

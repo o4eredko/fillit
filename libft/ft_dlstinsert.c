@@ -70,15 +70,21 @@ int ft_insert2(t_dlist **list, t_dlist *elem)
 				return (0);
 			tmp_elem = tmp_elem->right;
 		}
-		if ((elem->right = tmp_elem->right))
-			elem->right->left = elem;
-		else
+		if (!(elem->right = tmp_elem->right))
 		{
 			elem->right = tmp_elem;
+			elem->left = tmp_elem;
+			tmp_elem->right = elem;
 			tmp_elem->left = elem;
 		}
-		elem->left = tmp_elem;
-		tmp_elem->right = elem;
+		else
+		{
+			elem->left = (tmp_elem->right->left) ? tmp_elem->right->left : tmp_elem->right;
+			elem->right->left = elem;
+			elem->left->right = elem;
+			if (!tmp_elem->cords[0])
+				tmp_elem->right = elem;
+		}
 	}
 	return (1);
 }
@@ -98,15 +104,21 @@ int	ft_dlstinsert(t_dlist **list, t_dlist *elem)
 				return (0);
 			tmp_elem = tmp_elem->down;
 		}
-		if ((elem->down = tmp_elem->down))
-			elem->down->up = elem;
-		else if (tmp_elem->cords[0])
+		if (!(elem->down = tmp_elem->down))
 		{
 			elem->down = tmp_elem;
-			tmp_elem->up = elem;
 			elem->up = tmp_elem;
+			tmp_elem->down = elem;
+			tmp_elem->up = elem;
 		}
-		tmp_elem->down = elem;
+		else
+		{
+			elem->up = (tmp_elem->down->up) ? tmp_elem->down->up : tmp_elem->down;
+			elem->down->up = elem;
+			elem->up->down = elem;
+			if (!tmp_elem->cords[1])
+				tmp_elem->down = elem;
+		}
 	}
 	return (ft_insert2(list, elem));
 }
