@@ -70,10 +70,13 @@ SRC = ft_memset.c\
 	  ft_lstadd.c\
 	  ft_lstiter.c\
 	  ft_lstmap.c\
+	  get_next_line.c\
+	  ft_dlstfind.c\
+	  ft_dlstgetend.c\
+	  ft_dlstgetn.c\
+	  ft_dlstinsert.c\
 	  ft_dlstnew.c\
-	  ft_find_elem.c\
-	  ft_insertdlst.c\
-	  get_next_line.c
+	  ft_dlstprint.c
 
 LIB = $(SRC:.c=.o)
 

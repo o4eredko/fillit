@@ -39,7 +39,7 @@ void	ft_dlstprint(t_dlist *list)
 		else if (tmp->c_size == sizeof(int))
 			ft_putnbr(*(int*)tmp->content);
 		else if (tmp->c_size == sizeof(long))
-			ft_putlong(*(int*)tmp->content);
+			printf("%d\n", (*(int*)tmp->content));
 		else
 			ft_putstr((char*)tmp->content);
 		tmp = tmp->right;
