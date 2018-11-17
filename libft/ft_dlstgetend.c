@@ -14,15 +14,26 @@
 
 t_dlist	*ft_dlstgetend(t_dlist	*list, char xy)
 {
+	t_dlist	*head;
+
+	head = list;
 	if (!list)
 		return (0);
 	if (!xy)
 	{
 		while (list->right)
+		{
+			if (list->right == head)
+				break;
 			list = list->right;
+		}
 		return (list);
 	}
 	while (list->down)
+	{
+		if (list->down == head)
+			break ;
 		list = list->down;
+	}
 	return (list);
 }

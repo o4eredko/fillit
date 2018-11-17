@@ -69,7 +69,7 @@ void	print_elem(t_dlist *tmp1, t_dlist *list)
 		j = print_size(ft_dlstfind(list, tmp1->cords[X], 0));
 		i = (i) ? tmp1->cords[X] - i : tmp1->cords[X] - 1;
 		k = i * 2 + j - 1 - ((tmp1->left && (tmp1->left->cords[X]) < tmp1->cords[X]) ? 1 : 0);
-		if (i > 1)
+		if (i >= 1)
 			print_spaces(k);
 		else if (!tmp1->left)
 			print_spaces(tmp1->cords[X] - 1 + j);

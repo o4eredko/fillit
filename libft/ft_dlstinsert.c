@@ -64,7 +64,8 @@ int ft_insert2(t_dlist **list, t_dlist *elem)
 		tmp_elem->right = elem;
 	else
 	{
-		while (tmp_elem->right && tmp_elem->right->cords[0] <= elem->cords[0])
+		while (tmp_elem->right && tmp_elem->right->cords[0] > tmp_elem->cords[0]
+			&& tmp_elem->right->cords[0] <= elem->cords[0])
 		{
 			if (tmp_elem->right->cords[0] == elem->cords[0])
 				return (0);
@@ -98,7 +99,8 @@ int	ft_dlstinsert(t_dlist **list, t_dlist *elem)
 		tmp_elem->down = elem;
 	else
 	{
-		while (tmp_elem->down && tmp_elem->down->cords[1] <= elem->cords[1])
+		while (tmp_elem->down && tmp_elem->down->cords[0] > tmp_elem->cords[0]
+			&& tmp_elem->down->cords[1] <= elem->cords[1])
 		{
 			if (tmp_elem->down->cords[1] == elem->cords[1])
 				return (0);

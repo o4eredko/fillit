@@ -22,6 +22,7 @@
 # include <stdio.h>
 
 # define CHECK(x) if (!x) return (0)
+# define X 0
 
 int					ft_atoi(const char *str);
 void				ft_bzero(void *s, size_t n);
@@ -108,6 +109,7 @@ t_dlist				*ft_dlstgetn(t_dlist *list, long n, char xy);
 int					ft_dlstinsert(t_dlist **list, t_dlist *elem);
 t_dlist				*ft_dlstnew(void const *content, size_t c_size, long x, long y);
 void				ft_dlstprint(t_dlist *list);
+void				ft_putlong(long nb);
 
 
 
