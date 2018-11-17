@@ -58,16 +58,16 @@ int ft_insert2(t_dlist **list, t_dlist *elem)
 {
 	t_dlist *tmp_elem;
 
-	if (!(tmp_elem = ft_dlstfind(*list, 0, elem->cords[1])))
-		tmp_elem = create_row(list, elem->cords[1]);
+	if (!(tmp_elem = ft_dlstfind(*list, 0, elem->cords[Y])))
+		tmp_elem = create_row(list, elem->cords[Y]);
 	if (!tmp_elem->right)
 		tmp_elem->right = elem;
 	else
 	{
-		while (tmp_elem->right && tmp_elem->right->cords[0] > tmp_elem->cords[0]
-			&& tmp_elem->right->cords[0] <= elem->cords[0])
+		while (tmp_elem->right && tmp_elem->right->cords[X] > tmp_elem->cords[X]
+			&& tmp_elem->right->cords[X] <= elem->cords[X])
 		{
-			if (tmp_elem->right->cords[0] == elem->cords[0])
+			if (tmp_elem->right->cords[X] == elem->cords[X])
 				return (0);
 			tmp_elem = tmp_elem->right;
 		}
@@ -83,7 +83,7 @@ int ft_insert2(t_dlist **list, t_dlist *elem)
 			elem->left = (tmp_elem->right->left) ? tmp_elem->right->left : tmp_elem->right;
 			elem->right->left = elem;
 			elem->left->right = elem;
-			if (!tmp_elem->cords[0])
+			if (!tmp_elem->cords[X])
 				tmp_elem->right = elem;
 		}
 	}
@@ -93,16 +93,16 @@ int	ft_dlstinsert(t_dlist **list, t_dlist *elem)
 {
 	t_dlist *tmp_elem;
 
-	if (!(tmp_elem = ft_dlstfind(*list, elem->cords[0], 0)))
-		tmp_elem = create_column(list, elem->cords[0]);
+	if (!(tmp_elem = ft_dlstfind(*list, elem->cords[X], 0)))
+		tmp_elem = create_column(list, elem->cords[X]);
 	if (!tmp_elem->down)
 		tmp_elem->down = elem;
 	else
 	{
-		while (tmp_elem->down && tmp_elem->down->cords[0] > tmp_elem->cords[0]
-			&& tmp_elem->down->cords[1] <= elem->cords[1])
+		while (tmp_elem->down && tmp_elem->down->cords[Y] > tmp_elem->cords[Y]
+			&& tmp_elem->down->cords[Y] <= elem->cords[Y])
 		{
-			if (tmp_elem->down->cords[1] == elem->cords[1])
+			if (tmp_elem->down->cords[Y] == elem->cords[Y])
 				return (0);
 			tmp_elem = tmp_elem->down;
 		}
@@ -118,7 +118,7 @@ int	ft_dlstinsert(t_dlist **list, t_dlist *elem)
 			elem->up = (tmp_elem->down->up) ? tmp_elem->down->up : tmp_elem->down;
 			elem->down->up = elem;
 			elem->up->down = elem;
-			if (!tmp_elem->cords[1])
+			if (!tmp_elem->cords[Y])
 				tmp_elem->down = elem;
 		}
 	}

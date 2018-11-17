@@ -23,6 +23,7 @@
 
 # define CHECK(x) if (!x) return (0)
 # define X 0
+# define Y 1
 
 int					ft_atoi(const char *str);
 void				ft_bzero(void *s, size_t n);

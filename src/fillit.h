@@ -36,5 +36,6 @@ void				print_usage();
 /*Additional funcs*/
 void				print_list(t_shape *head);
 void				print_cords(t_cords *head);
+void				algorithm(t_dlist **head);
 
 #endif
