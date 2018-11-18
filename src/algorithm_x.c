@@ -16,6 +16,22 @@ void	delete_from_row(t_dlist *elem)
 		elem->up->down = elem->down;
 }
 
+void	restore_in_col(t_dlist *elem)
+{
+	if (elem->left)
+		elem->left->right = elem;
+	if (elem->right)
+		elem->right->left = elem;
+}
+
+void	restore_in_row(t_dlist *elem)
+{
+	if (elem->down)
+		elem->down->up = elem;
+	if (elem->up)
+		elem->up->down = elem;
+}
+
 static t_dlist	*choose_column(t_dlist *head)
 {
 	t_dlist	*tmp;
@@ -101,11 +117,10 @@ static void		reduce_matrix(t_dlist **head, t_dlist **row)
 	t_dlist	*tmp;
 	t_dlist	*tmp1;
 
-	tmp = ft_dlstfind(*head, 0, (*row)->cords[Y]);
-	tmp = tmp->right;
+	tmp = (ft_dlstfind(*head, 0, (*row)->cords[Y]))->right;
 	while (tmp->right)
 	{
-		tmp1 = tmp;
+		tmp1 = (ft_dlstfind(*head, tmp->cords[X], 0))->down;
 		while (tmp1->down)
 		{
 			delete_row(head, tmp1->cords[Y]);
@@ -134,7 +149,7 @@ void			algorithm(t_dlist **head)
 //		{
 			pivot = pivot->down;
 			/*Level 1*/
-			reduce_matrix(head, &pivot);
+			reduce_matrix(head, &pivot->down);
 		}
 //	}
 }
