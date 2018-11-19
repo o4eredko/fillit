@@ -12,7 +12,7 @@
 
 #include "fillit.h"
 
-void	delete_from_col(t_dlist *elem)
+void			delete_from_col(t_dlist *elem)
 {
 	if (elem->left)
 		elem->left->right = elem->right;
@@ -20,7 +20,7 @@ void	delete_from_col(t_dlist *elem)
 		elem->right->left = elem->left;
 }
 
-void	delete_from_row(t_dlist *elem)
+void			delete_from_row(t_dlist *elem)
 {
 	if (elem->down)
 		elem->down->up = elem->up;
@@ -44,7 +44,7 @@ void			restore_in_row(t_dlist *elem)
 		elem->up->down = elem;
 }
 
-void		restore_col(t_dlist **head, t_dlist *col)
+void			restore_col(t_dlist **head, t_dlist *col)
 {
 	t_dlist *tmp;
 	t_dlist	*col_elem;
@@ -55,7 +55,8 @@ void		restore_col(t_dlist **head, t_dlist *col)
 			col_elem = ft_dlstfind(col, col->cords[X], tmp->cords[Y]);
 			if (!tmp->right)
 				tmp->right = col_elem;
-			if (tmp->right && col_elem && tmp->right->cords[X] > col_elem->cords[X])
+			if (tmp->right && col_elem
+				&& tmp->right->cords[X] > col_elem->cords[X])
 				tmp->right = col_elem;
 			tmp = tmp->down;
 		}
@@ -70,18 +71,20 @@ void		restore_col(t_dlist **head, t_dlist *col)
 		}
 }
 
-void		restore_row(t_dlist **head, t_dlist *row)
+void			restore_row(t_dlist **head, t_dlist *row)
 {
 	t_dlist *tmp;
 	t_dlist *row_elem;
 
-	if ((*head)->right && (tmp = ft_dlstfind(*head, (*head)->right->cords[X], 0)))
+	if ((*head)->right
+		&& (tmp = ft_dlstfind(*head, (*head)->right->cords[X], 0)))
 		while (tmp)
 		{
 			row_elem = ft_dlstfind(row, tmp->cords[X], row->cords[Y]);
 			if (!tmp->down)
 				tmp->down = row_elem;
-			if (tmp->down && row_elem && tmp->down->cords[Y] > row_elem->cords[Y])
+			if (tmp->down
+				&& row_elem && tmp->down->cords[Y] > row_elem->cords[Y])
 				tmp->down = row_elem;
 			tmp = tmp->right;
 		}
@@ -104,7 +107,6 @@ static t_dlist	*choose_column(t_dlist *head)
 	int		counter;
 
 	counter = -1;
-	res = NULL;
 	while (head->right && head->right->cords[X] > head->cords[X])
 	{
 		i = 0;
@@ -133,7 +135,8 @@ void			delete_col(t_dlist ***stack, t_dlist **head, long x)
 	if ((*head)->down && (tmp = ft_dlstfind(*head, 0, (*head)->down->cords[Y])))
 		while (tmp)
 		{
-			if (tmp->right && tmp->right->cords[X] == x  && tmp->right->right == tmp->right)
+			if (tmp->right && tmp->right->cords[X] == x
+				&& tmp->right->right == tmp->right)
 				tmp->right = NULL;
 			else if (tmp->right && tmp->right->cords[X] == x)
 				tmp->right = tmp->right->right;
@@ -153,14 +156,16 @@ void			delete_col(t_dlist ***stack, t_dlist **head, long x)
 	}
 }
 
-void		delete_row(t_dlist ***stack, t_dlist **head, long y)
+void			delete_row(t_dlist ***stack, t_dlist **head, long y)
 {
 	t_dlist	*tmp;
 
-	if ((*head)->right && (tmp = ft_dlstfind(*head, (*head)->right->cords[X], 0)))
+	if ((*head)->right
+		&& (tmp = ft_dlstfind(*head, (*head)->right->cords[X], 0)))
 		while (tmp)
 		{
-			if (tmp->down && tmp->down->cords[Y] == y && tmp->down->down == tmp->down)
+			if (tmp->down && tmp->down->cords[Y] == y
+				&& tmp->down->down == tmp->down)
 				tmp->down = NULL;
 			else if (tmp->down && tmp->down->cords[Y] == y)
 				tmp->down = tmp->down->down;
@@ -180,7 +185,8 @@ void		delete_row(t_dlist ***stack, t_dlist **head, long y)
 	}
 }
 
-static void		reduce_matrix(t_dlist ***stack, t_dlist **res_stack, t_dlist **head, t_dlist **row)
+static void		reduce_matrix(t_dlist ***stack, t_dlist **res_stack,
+		t_dlist **head, t_dlist **row)
 {
 	t_dlist	*tmp;
 	t_dlist	*tmp1;
@@ -218,13 +224,13 @@ static void		reload_matrix(t_dlist **stack, t_dlist **head)
 	}
 }
 
-void			algorithm(t_dlist **head, t_dlist **del_stack, t_dlist **res_stack)
+void			algorithm(t_dlist **head, t_dlist **del_stack,
+		t_dlist **res_stack)
 {
 	t_dlist	*pivot;
 
 	if ((*head)->right || (*head)->down)
 	{
-		/*Level 0*/
 		if (!(pivot = choose_column(*head)))
 		{
 			pop(res_stack, 1);
@@ -233,11 +239,11 @@ void			algorithm(t_dlist **head, t_dlist **del_stack, t_dlist **res_stack)
 		while (pivot->down && pivot->down->cords[Y] > pivot->cords[Y])
 		{
 			pivot = pivot->down;
-			/*Level 1*/
 			push(&res_stack, pivot, 1);
 			reduce_matrix(&del_stack, res_stack, head, &pivot);
-//			print_stack(stack);
 			reload_matrix(del_stack, head);
 		}
 	}
+	else
+		printf("\n\nResult is row: %d\n", (res_stack[0])->cords[Y]);
 }

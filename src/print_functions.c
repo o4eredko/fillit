@@ -68,4 +68,3 @@ void	print_stack(t_dlist **stack)
 		top--;
 	}
 }
-

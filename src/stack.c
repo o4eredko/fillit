@@ -28,14 +28,13 @@ void	push(t_dlist ***stack, t_dlist *elem, int stack_type)
 
 t_dlist	*pop(t_dlist **stack, int stack_type)
 {
-
 	if (!stack_type)
 	{
 		g_del_stack--;
 		return (stack[g_del_stack + 1]);
 	}
 	else
-		{
+	{
 		g_res_stack--;
 		return (stack[g_res_stack + 1]);
 	}

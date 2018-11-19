@@ -39,8 +39,5 @@ int main()
 	create_res_stack(list, &res_stack);
 	ft_dlstprint(list);
 	algorithm(&list, del_stack, res_stack);
-	ft_putstr("\n");
-	ft_putstr("\n");
-	ft_dlstprint(list);
 	return (0);
 }
