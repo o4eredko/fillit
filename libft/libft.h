@@ -6,7 +6,7 @@
 /*   By: dmatseku <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/24 12:52:26 by dmatseku          #+#    #+#             */
-/*   Updated: 2018/10/31 15:18:43 by dmatseku         ###   ########.fr       */
+/*   Updated: 2018/11/19 15:08:20 by dmatseku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int					ft_dlstinsert(t_dlist **list, t_dlist *elem);
 t_dlist				*ft_dlstnew(void const *content, size_t c_size, long x, long y);
 void				ft_dlstprint(t_dlist *list);
 void				ft_putlong(long nb);
-
+void				ft_dlstaddcolumn(t_dlist **list, void *content, size_t c_size);
 
 
 #endif
