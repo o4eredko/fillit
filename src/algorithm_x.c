@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   algorithm_x.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yochered <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/11/19 12:28:56 by yochered          #+#    #+#             */
+/*   Updated: 2018/11/19 12:28:59 by yochered         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fillit.h"
 
 void	delete_from_col(t_dlist *elem)
@@ -16,7 +28,7 @@ void	delete_from_row(t_dlist *elem)
 		elem->up->down = elem->down;
 }
 
-void	restore_in_col(t_dlist *elem)
+void			restore_in_col(t_dlist *elem)
 {
 	if (elem->left)
 		elem->left->right = elem;
@@ -24,7 +36,7 @@ void	restore_in_col(t_dlist *elem)
 		elem->right->left = elem;
 }
 
-void	restore_in_row(t_dlist *elem)
+void			restore_in_row(t_dlist *elem)
 {
 	if (elem->down)
 		elem->down->up = elem;
@@ -32,12 +44,60 @@ void	restore_in_row(t_dlist *elem)
 		elem->up->down = elem;
 }
 
+void		restore_col(t_dlist **head, t_dlist *col)
+{
+	t_dlist *tmp;
+
+	if ((tmp = ft_dlstfind(*head, 0, (*head)->down->cords[Y])))
+		while (tmp)
+		{
+			if (!tmp->right)
+				tmp->right = ft_dlstgetn(col, tmp->cords[Y], Y);
+			if (tmp->right && tmp->right->cords[X] > col->cords[X])
+				tmp->right = ft_dlstgetn(col, tmp->cords[Y], Y);
+			tmp = tmp->down;
+		}
+	tmp = col;
+	if (!tmp->down)
+		restore_in_col(tmp);
+	else
+		while (tmp->down && tmp->down->cords[Y] > tmp->cords[Y])
+		{
+			restore_in_col(tmp);
+			tmp = tmp->down;
+		}
+}
+
+void		restore_row(t_dlist **head, t_dlist *row)
+{
+	t_dlist *tmp;
+
+	if ((tmp = ft_dlstfind(*head, (*head)->right->cords[X], 0)))
+		while (tmp)
+		{
+			if (!tmp->down)
+				tmp->down = ft_dlstgetn(row, tmp->cords[X], X);
+			if (tmp->down && tmp->down->cords[Y] > row->cords[Y])
+				tmp->down = ft_dlstgetn(row, tmp->cords[X], X);
+			tmp = tmp->right;
+		}
+	tmp = row;
+	if (!tmp->right)
+		restore_in_row(tmp);
+	else
+		while (tmp->right && tmp->right->cords[X] > tmp->cords[X])
+		{
+			restore_in_row(tmp);
+			tmp = tmp->right;
+		}
+}
+
 static t_dlist	*choose_column(t_dlist *head)
 {
 	t_dlist	*tmp;
 	t_dlist	*res;
-	int 	i;
-	int 	counter;
+	int		i;
+	int		counter;
 
 	counter = 0;
 	res = NULL;
@@ -60,7 +120,7 @@ static t_dlist	*choose_column(t_dlist *head)
 	return (res);
 }
 
-static void		delete_col(t_dlist **head, long x)
+void			delete_col(t_dlist ***stack, t_dlist **head, long x)
 {
 	t_dlist	*tmp;
 
@@ -75,6 +135,7 @@ static void		delete_col(t_dlist **head, long x)
 		}
 	if ((tmp = ft_dlstfind(*head, x, 0)))
 	{
+		push(stack, tmp);
 		if (!tmp->down)
 			delete_from_col(tmp);
 		else
@@ -86,7 +147,7 @@ static void		delete_col(t_dlist **head, long x)
 	}
 }
 
-static void		delete_row(t_dlist **head, long y)
+void		delete_row(t_dlist ***stack, t_dlist **head, long y)
 {
 	t_dlist	*tmp;
 
@@ -101,6 +162,7 @@ static void		delete_row(t_dlist **head, long y)
 		}
 	if ((tmp = ft_dlstfind(*head, 0, y)))
 	{
+		push(stack, tmp);
 		if (!tmp->right)
 			delete_from_row(tmp);
 		else
@@ -112,7 +174,7 @@ static void		delete_row(t_dlist **head, long y)
 	}
 }
 
-static void		reduce_matrix(t_dlist **head, t_dlist **row)
+static void		reduce_matrix(t_dlist ***stack, t_dlist **head, t_dlist **row)
 {
 	t_dlist	*tmp;
 	t_dlist	*tmp1;
@@ -123,12 +185,12 @@ static void		reduce_matrix(t_dlist **head, t_dlist **row)
 		tmp1 = (ft_dlstfind(*head, tmp->cords[X], 0))->down;
 		while (tmp1->down)
 		{
-			delete_row(head, tmp1->cords[Y]);
+			delete_row(stack, head, tmp1->cords[Y]);
 			if (tmp1->down->cords[Y] <= tmp1->cords[Y])
 				break ;
 			tmp1 = tmp1->down;
 		}
-		delete_col(head, tmp->cords[X]);
+		delete_col(stack, head, tmp->cords[X]);
 		if (tmp->right->cords[X] <= tmp->cords[X])
 			break ;
 		tmp = tmp->right;
@@ -136,9 +198,24 @@ static void		reduce_matrix(t_dlist **head, t_dlist **row)
 //	algorithm(head);
 }
 
+static void		reload_matrix(t_dlist **stack, t_dlist **head)
+{
+	t_dlist *elem;
+
+	while (g_del_stack != -1)
+	{
+		elem = pop(stack);
+		if (!elem->cords[X])
+			restore_row(head, elem);
+		else if (!elem->cords[Y])
+			restore_col(head, elem);
+	}
+}
+
 void			algorithm(t_dlist **head)
 {
 	t_dlist	*pivot;
+	t_dlist **stack;
 
 	if ((*head)->right)
 	{
@@ -149,7 +226,10 @@ void			algorithm(t_dlist **head)
 //		{
 			pivot = pivot->down;
 			/*Level 1*/
-			reduce_matrix(head, &pivot->down);
+			create_stack(*head, &stack);
+			reduce_matrix(&stack, head, &pivot);
+//			print_stack(stack);
+			reload_matrix(stack, head);
 		}
 //	}
 }

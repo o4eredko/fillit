@@ -54,3 +54,18 @@ void	print_cords(t_cords *head)
 	}
 }
 
+void	print_stack(t_dlist **stack)
+{
+	int top;
+
+	top = g_del_stack;
+	while (top != -1)
+	{
+		ft_putnbr((stack[top])->cords[X]);
+		ft_putstr(", ");
+		ft_putnbr((stack[top])->cords[Y]);
+		ft_putstr("\n");
+		top--;
+	}
+}
+
