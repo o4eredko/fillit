@@ -31,7 +31,7 @@ int		print_size(t_dlist *elem)
 	j = 1;
 	res = *(long*)elem->content;
 	if (elem->c_size == sizeof(long))
-		while (res / j > 10)
+		while (res / j > 9)
 		{
 			i++;
 			j *= 10;
@@ -57,33 +57,22 @@ void	print_header(t_dlist *tmp)
 	}
 }
 
-void	print_elem(t_dlist *tmp1, t_dlist *list)
+void	print_elem(int size, t_dlist *elem)
 {
-	long i;
-	long j;
-	long k;
+	int count;
 
-	i = 0;
-	while (tmp1)
-	{
-		j = print_size(ft_dlstfind(list, tmp1->cords[X], 0));
-		i = (i) ? tmp1->cords[X] - i : tmp1->cords[X] - 1;
-		k = i * 2 + j - 1 - ((tmp1->left && (tmp1->left->cords[X]) < tmp1->cords[X]) ? 1 : 0);
-		if (i >= 1)
-			print_spaces(k);
-		else if (!tmp1->left)
-			print_spaces(tmp1->cords[X] - 1 + j);
-		ft_putstr("1");
-		i = tmp1->cords[X];
-		if (tmp1->right && tmp1->right->cords[X] < tmp1->cords[X])
-			break ;
-		tmp1 = tmp1->right;
-	}
+	count = elem ? size : size + 1;
+	if (elem)
+		ft_putchar('1');
+	print_spaces(count);
 }
 
 void	ft_dlstprint(t_dlist *list)
 {
 	t_dlist *tmp;
+	t_dlist *tmp1;
+	long i;
+	long j;
 
 	if (!list)
 	{
@@ -91,12 +80,23 @@ void	ft_dlstprint(t_dlist *list)
 		return ;
 	}
 	print_header(list);
-	tmp = list->down;
-	while (tmp)
+	i = 0;
+	j = ft_dlstgetend(list, Y)->cords[Y];
+	while (++i <= j)
 	{
 		ft_putchar('\n');
-		if (tmp->right)
-			print_elem(tmp->right, list);
-		tmp = tmp->down;
+		tmp = list;
+		while ((tmp = tmp->right))
+		{
+			if ((tmp1 = tmp->down))
+			{
+				while (tmp1 && tmp1->down && tmp1->down->cords[Y] > tmp1->cords[Y] && tmp1->cords[Y] < i)
+					tmp1 = tmp1->down;
+				if (tmp1 && tmp1->cords[Y] == i)
+					print_elem(print_size(tmp), tmp1);
+			}
+			if (!tmp->down || (tmp1 && i != tmp1->cords[Y]))
+				print_elem(print_size(tmp), 0);
+		}
 	}
 }
