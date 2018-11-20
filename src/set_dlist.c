@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "fillit.h"
-#include "../libft/libft.h"
 
 int		ft_clstcount(t_cords *cords)
 {

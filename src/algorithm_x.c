@@ -46,7 +46,7 @@ static void		reduce_matrix(t_dlist **head, t_dlist **row)
 	t_dlist	*tmp;
 	t_dlist	*tmp1;
 
-	tmp = (ft_dlstfind(*head, 0, (*row)->cords[Y]))->right;
+	tmp = (tmp->right) ? (ft_dlstfind(*head, 0, (*row)->cords[Y]))->right : 0;
 	while (tmp && tmp->right)
 	{
 		tmp1 = (ft_dlstfind(*head, tmp->cords[X], 0))->down;

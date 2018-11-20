@@ -39,7 +39,7 @@ int					g_del_top;
 int					g_res_top;
 
 t_shape				*validate(int fd);
-void				print_usage();
+void				print_usage(void);
 void				algorithm(t_dlist **head);
 void				delete_from_col(t_dlist *elem);
 void				delete_from_row(t_dlist *elem);

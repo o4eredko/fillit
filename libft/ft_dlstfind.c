@@ -15,9 +15,13 @@
 t_dlist *ft_dlstfind(t_dlist *head, long x, long y)
 {
 	CHECK((head));
-	while (head && head->cords[0] != x)
+	while (head && head->cords[X] != x && head->right
+		   && head->right->cords[X] > head->cords[X])
 		head = head->right;
-	while (head && head->cords[1] != y)
+	while (head && head->cords[Y] != y && head->down
+		   && head->down->cords[Y] > head->cords[Y])
 		head = head->down;
-	return (head);
+	if (head->cords[X] == x && head->cords[Y] == y)
+		return (head);
+	return (NULL);
 }
