@@ -52,7 +52,7 @@ void				restore_row(t_dlist **head, t_dlist *row);
 void				create_stack(t_dlist *list, int stack_type);
 void				push(t_dlist *elem, int stack_type);
 t_dlist				*pop(int stack_type);
-void				set_dlist(t_cords *cords, t_dlist **list, int length);
+int					set_dlist(t_cords *cords, t_dlist **list, int length);
 t_cords				*lstmap(t_shape *lst, t_cords *(*f)(t_shape *elem));
 t_cords				*fill_cords(t_shape *elem);
 
