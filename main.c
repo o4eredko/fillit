@@ -38,8 +38,7 @@ int main()
 	ft_dlstprint(list);
 	ft_putchar('\n');
 	ft_putchar('\n');
-	algorithm(&list, 0);
-	reduce_matrix(&list, &(g_res_stack[0]), -1);
-	ft_dlstprint(list);
+	algorithm(&list);
+	print_stack(list, 1);
 	return (0);
 }

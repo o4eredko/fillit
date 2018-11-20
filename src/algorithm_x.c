@@ -185,7 +185,7 @@ void			delete_row(t_dlist **head, long y)
 	}
 }
 
-void			reduce_matrix(t_dlist **head, t_dlist **row, int level)
+void			reduce_matrix(t_dlist **head, t_dlist **row)
 {
 	t_dlist	*tmp;
 	t_dlist	*tmp1;
@@ -206,7 +206,7 @@ void			reduce_matrix(t_dlist **head, t_dlist **row, int level)
 			break ;
 		tmp = tmp->right;
 	}
-	level == -1 ? "" : algorithm(head, level + 1);
+	algorithm(head);
 }
 
 static void		reload_matrix(t_dlist **head)
@@ -223,20 +223,22 @@ static void		reload_matrix(t_dlist **head)
 	}
 }
 
-void			algorithm(t_dlist **head, int level)
+void			algorithm(t_dlist **head)
 {
 	t_dlist	*pivot;
 
 	if ((*head)->right)
 	{
-		if (!(pivot = choose_column(*head))) {
+		if (!(pivot = choose_column(*head)))
+		{
 			pop(1);
 			return;
 		}
-		while (pivot->down && pivot->down->cords[Y] > pivot->cords[Y]) {
+		while (pivot->down && pivot->down->cords[Y] > pivot->cords[Y])
+		{
 			pivot = pivot->down;
-			!level ? push(pivot, 1) : "";
-			reduce_matrix(head, &pivot, level);
+			push(pivot, 1);
+			reduce_matrix(head, &pivot);
 			reload_matrix(head);
 		}
 	}

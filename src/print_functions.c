@@ -54,17 +54,45 @@ void	print_cords(t_cords *head)
 	}
 }
 
-void	print_stack(t_dlist **stack)
+void	print_row(t_dlist *head, t_dlist *row)
+{
+	row = ft_dlstfind(head, 0, row->cords[Y]);
+	ft_putnbr(row->cords[Y]);
+	while (row)
+	{
+		row = row->right;
+		ft_putstr("->");
+		ft_putnbr(row->cords[X]);
+		if (row->right->cords[X] < row->cords[X])
+			break ;
+	}
+}
+
+void	print_stack(t_dlist *head, int stack_type)
 {
 	int top;
 
-	top = g_del_stack;
-	while (top != -1)
+	if (!stack_type)
 	{
-		ft_putnbr((stack[top])->cords[X]);
-		ft_putstr(", ");
-		ft_putnbr((stack[top])->cords[Y]);
-		ft_putstr("\n");
-		top--;
+		top = g_del_top;
+		while (top != -1)
+		{
+			ft_putnbr((g_del_stack[top])->cords[X]);
+			ft_putstr(", ");
+			ft_putnbr((g_del_stack[top])->cords[Y]);
+			ft_putstr("\n");
+			top--;
+		}
+	}
+	else
+	{
+		top = g_res_top;
+		while (top != -1)
+		{
+			ft_putstr("Row: ");
+			print_row(head, g_res_stack[top]);
+			ft_putstr("\n");
+			top--;
+		}
 	}
 }
