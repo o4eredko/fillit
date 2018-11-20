@@ -41,12 +41,21 @@ int					g_res_top;
 t_shape				*validate(int fd);
 void				print_usage();
 void				algorithm(t_dlist **head);
+void				delete_from_col(t_dlist *elem);
+void				delete_from_row(t_dlist *elem);
+void				restore_in_col(t_dlist *elem);
+void				restore_in_row(t_dlist *elem);
+void				delete_col(t_dlist **head, long x);
+void				delete_row(t_dlist **head, long y);
+void				restore_col(t_dlist **head, t_dlist *col);
+void				restore_row(t_dlist **head, t_dlist *row);
 void				create_stack(t_dlist *list, int stack_type);
 void				push(t_dlist *elem, int stack_type);
 t_dlist				*pop(int stack_type);
 void				set_dlist(t_cords *cords, t_dlist **list, int length);
 t_cords				*lstmap(t_shape *lst, t_cords *(*f)(t_shape *elem));
 t_cords				*fill_cords(t_shape *elem);
+
 /*Additional funcs*/
 void				print_list(t_shape *head);
 void				print_cords(t_cords *head);
