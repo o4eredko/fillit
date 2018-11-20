@@ -21,9 +21,9 @@ void	print_spaces(long count)
 		ft_putchar(' ');
 }
 
-int		print_size(t_dlist *elem)
+size_t		print_size(t_dlist *elem)
 {
-	int i;
+	size_t i;
 	long j;
 	long res;
 
@@ -31,14 +31,16 @@ int		print_size(t_dlist *elem)
 	j = 1;
 	res = *(long*)elem->content;
 	if (elem->c_size == sizeof(long))
-		while (res / j > 9)
-		{
+	{
+		while (res / j > 9) {
 			i++;
 			j *= 10;
 		}
-	else
+		return (i);
+	}
+	else if (elem->c_size == sizeof(char))
 		return (1);
-	return (i);
+	return (elem->c_size - 1);
 }
 
 void	print_header(t_dlist *tmp)
@@ -51,15 +53,17 @@ void	print_header(t_dlist *tmp)
 			ft_putnbr(*(int*)tmp->content);
 		else if (tmp->c_size == sizeof(long))
 			ft_putlong(*(int*)tmp->content);
+		else
+			ft_putstr((char*)tmp->content);
 		if (tmp->cords[0] != 0 || tmp->cords[1] != 0)
 			ft_putchar(' ');
 		tmp = tmp->right;
 	}
 }
 
-void	print_elem(int size, t_dlist *elem)
+void	print_elem(size_t size, t_dlist *elem)
 {
-	int count;
+	size_t count;
 
 	count = elem ? size : size + 1;
 	if (elem)

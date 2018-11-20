@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+	/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   fill_cords.c                                       :+:      :+:    :+:   */
@@ -58,7 +58,7 @@ t_cords	*fill_cords(t_shape *elem)
 		x = -1;
 		while (++x < 4)
 		{
-			if (elem->matrix[x][y] == '#')
+			if (elem->matrix[y][x] == '#')
 			{
 				CHECK_ERR((*res->cords = (int *)ft_memalloc(sizeof(int) * 2)));
 				(*res->cords)[0] = x;
@@ -68,11 +68,11 @@ t_cords	*fill_cords(t_shape *elem)
 		}
 	}
 	res->cords -= 4;
-	// move_cords(res->cords, 0);
+	move_cords(res->cords, 0);
 	return (res);
 }
 
-int		main(int ac, char **av)
+/*int		main(int ac, char **av)
 {
 	int		fd;
 	t_shape	*head;
@@ -97,4 +97,4 @@ int		main(int ac, char **av)
 		}
 	}
 	return (0);
-}
+}*/
