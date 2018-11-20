@@ -5,8 +5,6 @@
 int main()
 {
 	t_dlist *list;
-	t_dlist **del_stack;
-	t_dlist	**res_stack;
 	char    a;
 
 	a = 'a';
@@ -35,9 +33,13 @@ int main()
 	ft_dlstinsert(&list, ft_dlstnew(&a, 1, 2, 6));
 	ft_dlstinsert(&list, ft_dlstnew(&a, 1, 7, 6));
 //
-	create_del_stack(list, &del_stack);
-	create_res_stack(list, &res_stack);
+	create_stack(list, 0);
+	create_stack(list, 1);
 	ft_dlstprint(list);
-	algorithm(&list, del_stack, res_stack);
+	ft_putchar('\n');
+	ft_putchar('\n');
+	algorithm(&list, 0);
+	reduce_matrix(&list, &(g_res_stack[0]), -1);
+	ft_dlstprint(list);
 	return (0);
 }

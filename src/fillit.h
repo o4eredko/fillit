@@ -33,19 +33,23 @@ typedef struct		s_cords
 	struct s_cords	*next;
 }					t_cords;
 
-int					g_del_stack;
+t_dlist				**g_del_stack;
+t_dlist				**g_res_stack;
+int					g_del_top;
+int					g_res_top;
 
 t_shape				*validate(int fd);
 void				print_usage();
-void				algorithm(t_dlist **head);
-void				create_stack(t_dlist *list, t_dlist ***stack);
-void				push(t_dlist ***stack, t_dlist *elem);
-t_dlist				*pop(t_dlist **stack);
+void				algorithm(t_dlist **head, int level);
+void				reduce_matrix(t_dlist **head, t_dlist **row, int level);
+void				create_stack(t_dlist *list, int stack_type);
+void				push(t_dlist *elem, int stack_type);
+t_dlist				*pop(int stack_type);
+void				set_dlist(t_cords *cords, t_dlist **list, int length);
+t_cords				*lstmap(t_shape *lst, t_cords *(*f)(t_shape *elem));
+t_cords				*fill_cords(t_shape *elem);
 /*Additional funcs*/
 void				print_list(t_shape *head);
 void				print_cords(t_cords *head);
 void				print_stack(t_dlist **stack);
-void				set_dlist(t_cords *cords, t_dlist **list, int length);
-t_cords				*lstmap(t_shape *lst, t_cords *(*f)(t_shape *elem));
-t_cords				*fill_cords(t_shape *elem);
 #endif

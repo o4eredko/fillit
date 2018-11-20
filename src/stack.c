@@ -12,54 +12,52 @@
 
 #include "fillit.h"
 
-void	push(t_dlist ***stack, t_dlist *elem, int stack_type)
+void	push(t_dlist *elem, int stack_type)
 {
 	if (!stack_type)
 	{
-		g_del_stack++;
-		(*stack)[g_del_stack] = elem;
+		g_del_top++;
+		g_del_stack[g_del_top] = elem;
 	}
 	else
 	{
-		g_res_stack++;
-		(*stack)[g_res_stack] = elem;
+		g_res_top++;
+		g_res_stack[g_res_top] = elem;
 	}
 }
 
-t_dlist	*pop(t_dlist **stack, int stack_type)
+t_dlist	*pop(int stack_type)
 {
 	if (!stack_type)
 	{
-		g_del_stack--;
-		return (stack[g_del_stack + 1]);
+		g_del_top--;
+		return (g_del_stack[g_del_top + 1]);
 	}
 	else
 	{
-		g_res_stack--;
-		return (stack[g_res_stack + 1]);
+		g_res_top--;
+		return (g_res_stack[g_res_top + 1]);
 	}
 }
 
-void	create_del_stack(t_dlist *list, t_dlist ***stack)
+void	create_stack(t_dlist *list, int stack_type)
 {
 	int cols;
 	int rows;
 
 	cols = (ft_dlstgetend(list, X))->cords[X];
 	rows = (ft_dlstgetend(list, Y))->cords[Y];
-	g_del_stack = -1;
-	(*stack) = (t_dlist **)ft_memalloc(sizeof(t_dlist *) * (cols + rows));
-	if (!(*stack))
-		return ;
-}
-
-void	create_res_stack(t_dlist *list, t_dlist ***stack)
-{
-	int rows;
-
-	rows = (ft_dlstgetend(list, Y))->cords[Y];
-	g_res_stack = -1;
-	(*stack) = (t_dlist **)ft_memalloc(sizeof(t_dlist *) * rows);
-	if (!(*stack))
-		return ;
+	if (!stack_type)
+	{
+		g_del_top = -1;
+		if (!(g_del_stack = (t_dlist **) ft_memalloc(sizeof(t_dlist *)
+				* (cols + rows))))
+			return ;
+	}
+	else
+	{
+		g_res_top = -1;
+		if (!(g_res_stack = (t_dlist **)ft_memalloc(sizeof(t_dlist *) * rows)))
+			return ;
+	}
 }
