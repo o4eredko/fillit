@@ -104,9 +104,7 @@ void			clear_stack(void)
 void			algorithm(t_dlist **head, t_list **col)
 {
 	t_dlist	*pivot;
-	long x;
 
-	x = 0;
 	if ((*head)->right)
 	{
 		if (!(pivot = choose_column(*head, *col)))
@@ -118,7 +116,6 @@ void			algorithm(t_dlist **head, t_list **col)
 			*col = ft_lstnew(&(pivot->cords[X]), sizeof(long));
 		else
 			ft_lstadd(col, ft_lstnew(&(pivot->cords[X]), sizeof(long)));
-		x = *(long *)(*col)->content;
 		while (pivot->down && pivot->down->cords[Y] > pivot->cords[Y])
 		{
 			pivot = pivot->down;
@@ -126,5 +123,10 @@ void			algorithm(t_dlist **head, t_list **col)
 			reduce_matrix(head, pivot, col);
 			reload_matrix(head);
 		}
+//		if (g_res_top != 9)
+//		{
+//			reload_matrix(head);
+//			algorithm(head, col);
+//		}
 	}
 }
