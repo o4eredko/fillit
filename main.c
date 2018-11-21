@@ -45,11 +45,11 @@ int main(int ac, char **av)
 	print_cords(cords);
 //	while (!res)
 //	{
-		set_dlist(cords, &list, ++i);
+		set_dlist(cords, &list, 4);
 //	free_lst(&cords);
 		create_stack(list, 0);
 		create_stack(list, 1);
-//		ft_dlstprint(list);
+		ft_dlstprint(list);
 		ft_putchar('\n');
 		res = algorithm(&list, &lst);
 //	}

@@ -83,23 +83,27 @@ void	set_cords(int **cords, t_dlist **list, int count, int nb)
 	}
 }
 
-static int	set_row(t_dlist *list, int length)
+static int	set_row(t_dlist *list, int length, int count)
 {
 	int i;
 	int j;
 	char *c;
 
 	i = 1;
+	while (count-- >= 0)
+		list = list->right;
 	while (i <= length)
 	{
 		j = 1;
 		while (j <= length)
 		{
-			CHECK((c = (char*)malloc(sizeof(char) * 2)));
-			c[0] = (char)(i + 48);
-			c[1] = (char)(j + 48);
-			ft_dlstaddcolumn(&list, c, 3);
+			CHECK((c = ft_strnew(sizeof(char) * 2)));
+			c[0] = (char)(j + 48);
+			c[1] = (char)(i + 48);
+			list->content = c;
+			list->c_size = 3;
 			j++;
+			list = list->right;
 		}
 		i++;
 	}
@@ -118,13 +122,12 @@ int			set_dlist(t_cords *cords, t_dlist **list, int length)
 		c1 = 'a' + j;
 		ft_dlstaddcolumn(list, &c1, sizeof(char));
 	}
-	CHECK((set_row(*list, length)));
 	j = -1;
-	i = ft_clstcount(cords);
 	while (++j < i)
 	{
 		set_cords(cords->cords, list, i, j + 1);
 		cords = cords->next;
 	}
+	CHECK((set_row(*list, length, i)));
 	return (1);
 }
