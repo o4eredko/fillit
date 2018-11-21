@@ -12,18 +12,18 @@
 
 #include "fillit.h"
 
-int				compare_cols(int x, t_cords *cords)
+int				compare_cols(long x, t_list *col)
 {
-	while (cords)
+	while (col)
 	{
-		if (cords->cords[0][X] == x)
+		if (*(long *)col->content == x)
 			return (1);
-		cords = cords->next;
+		col = col->next;
 	}
 	return (0);
 }
 
-static t_dlist	*choose_column(t_dlist *head, t_cords *cords)
+static t_dlist	*choose_column(t_dlist *head, t_list *col)
 {
 	t_dlist	*tmp;
 	t_dlist	*res;
@@ -31,12 +31,13 @@ static t_dlist	*choose_column(t_dlist *head, t_cords *cords)
 	int		counter;
 
 	counter = -1;
+	res = NULL;
 	while (head->right && head->right->cords[X] > head->cords[X])
 	{
 		i = 0;
 		head = head->right;
 		tmp = head;
-		if (!(compare_cols(tmp->cords[X], cords)))
+		if (!(compare_cols(tmp->cords[X], col)))
 		{
 			while (tmp->down && tmp->down->cords[Y] > tmp->cords[Y])
 			{
@@ -55,7 +56,7 @@ static t_dlist	*choose_column(t_dlist *head, t_cords *cords)
 	return (res);
 }
 
-static void		reduce_matrix(t_dlist **head, t_dlist *row, t_cords *col)
+static void		reduce_matrix(t_dlist **head, t_dlist *row, t_list **col)
 {
 	t_dlist	*tmp;
 	t_dlist	*tmp1;
@@ -100,41 +101,30 @@ void			clear_stack(void)
 		pop(1);
 }
 
-t_cords			*allocate_lst(t_cords *head)
-{
-	head = (t_cords *)malloc(sizeof(head));
-	head->cords = (int **)ft_memalloc(sizeof(int *) * 1);
-	head->cords[0] = (int *)ft_memalloc(sizeof(int) * 2);
-	return (head);
-}
-
-void			algorithm(t_dlist **head, t_cords *col)
+void			algorithm(t_dlist **head, t_list **col)
 {
 	t_dlist	*pivot;
+	long x;
 
-	ft_putstr("\n\n");
-	ft_dlstprint(*head);
+	x = 0;
 	if ((*head)->right)
 	{
-		if (!(pivot = choose_column(*head, col)))
+		if (!(pivot = choose_column(*head, *col)))
 		{
 			pop(1);
 			return ;
 		}
-		if (!col)
-			col = allocate_lst(col);
+		if (!*col)
+			*col = ft_lstnew(&(pivot->cords[X]), sizeof(long));
+		else
+			ft_lstadd(col, ft_lstnew(&(pivot->cords[X]), sizeof(long)));
+		x = *(long *)(*col)->content;
 		while (pivot->down && pivot->down->cords[Y] > pivot->cords[Y])
 		{
 			pivot = pivot->down;
 			push(pivot, 1);
 			reduce_matrix(head, pivot, col);
 			reload_matrix(head);
-		}
-		if (g_res_top != 1)
-		{
-			reload_matrix(head);
-			clear_stack();
-			algorithm(head, col);
 		}
 	}
 }

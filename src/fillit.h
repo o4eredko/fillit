@@ -40,7 +40,7 @@ int					g_res_top;
 
 t_shape				*validate(int fd);
 void				print_usage(void);
-void				algorithm(t_dlist **head, t_cords *col);
+void				algorithm(t_dlist **head, t_list **col);
 void				delete_from_col(t_dlist *elem);
 void				delete_from_row(t_dlist *elem);
 void				restore_in_col(t_dlist *elem);
