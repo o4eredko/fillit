@@ -23,39 +23,6 @@ int				compare_cols(long x, t_list *col)
 	return (0);
 }
 
-/*static t_dlist	*choose_column(t_dlist *head, t_list *col)
-{
-	t_dlist	*tmp;
-	t_dlist	*res;
-	int		i;
-	int		counter;
-
-	counter = -1;
-	res = NULL;
-	while (head->right && head->right->cords[X] > head->cords[X])
-	{
-		i = 0;
-		head = head->right;
-		tmp = head;
-		if (!(compare_cols(tmp->cords[X], col)))
-		{
-			while (tmp->down && tmp->down->cords[Y] > tmp->cords[Y])
-			{
-				i++;
-				tmp = tmp->down;
-			}
-			if ((counter == -1 || i < counter))
-			{
-				counter = i;
-				res = head;
-			}
-		}
-	}
-	if (!counter)
-		return (NULL);
-	return (res);
-}*/
-
 static void		reload_matrix(t_dlist **head)
 {
 	t_dlist *elem;
@@ -76,11 +43,10 @@ void			clear_stack(void)
 		pop(1);
 }
 
-static int		reduce_matrix(t_dlist **head, t_dlist *row, t_list **col)
+static void		reduce_matrix(t_dlist **head, t_dlist *row, int k)
 {
 	t_dlist	*tmp;
 	t_dlist	*tmp1;
-	int		res;
 
 	if ((tmp = ft_dlstfind(*head, 0, row->cords[Y])))
 		tmp = tmp->right;
@@ -99,41 +65,27 @@ static int		reduce_matrix(t_dlist **head, t_dlist *row, t_list **col)
 			break ;
 		tmp = tmp->right;
 	}
-	res = algorithm(head, col);
-	return (res);
+	algorithm(head, k);
 }
 
-int			algorithm(t_dlist **head, t_list **col)
+int				algorithm(t_dlist **head, int num_of_tetriminos)
 {
 	t_dlist	*pivot;
-	int 	res;
 
-	res = 0;
-	ft_putstr("\n\n");
-	ft_dlstprint(*head);
 	if ((*head)->right->c_size == sizeof(char))
 	{
 		pivot = (*head)->right;
-//		if (!*col)
-//			*col = ft_lstnew(&(pivot->cords[X]), sizeof(long));
-//		else
-//			ft_lstadd(col, ft_lstnew(&(pivot->cords[X]), sizeof(long)));
 		while (pivot->down && pivot->down->cords[Y] > pivot->cords[Y])
 		{
 			pivot = pivot->down;
 			push(pivot, 1);
-			res = reduce_matrix(head, pivot, col);
+			reduce_matrix(head, pivot, num_of_tetriminos);
 			reload_matrix(head);
-			if (g_res_top == 2)
+			if (g_res_top == num_of_tetriminos - 1)
 				return (1);
+			else if (g_res_top > num_of_tetriminos - 1)
+				return (0);
 		}
-//		if (g_res_top != 1)
-//			return (0);
-//		if (g_res_top != 9)
-//		{
-//			reload_matrix(head);
-//			algorithm(head, col);
-//		}
 	}
-	return (1);
+	return (0);
 }

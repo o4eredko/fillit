@@ -40,7 +40,8 @@ int					g_res_top;
 
 t_shape				*validate(int fd);
 void				print_usage(void);
-int					algorithm(t_dlist **head, t_list **col);
+int					ft_clstcount(t_cords *cords);
+int					algorithm(t_dlist **head, int num_of_tetriminos);
 void				delete_from_col(t_dlist *elem);
 void				delete_from_row(t_dlist *elem);
 void				restore_in_col(t_dlist *elem);
@@ -56,6 +57,8 @@ t_dlist				*pop(int stack_type);
 int					set_dlist(t_cords *cords, t_dlist **list, int length);
 t_cords				*lstmap(t_shape *lst, t_cords *(*f)(t_shape *elem));
 t_cords				*fill_cords(t_shape *elem);
+void				print_map(t_dlist *head, char **map, int size);
+char				**create_matrix(int start_size);
 
 /*Additional funcs*/
 void				print_list(t_shape *head);
