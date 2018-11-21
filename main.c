@@ -49,7 +49,7 @@ int 	main(int ac, char **av)
 	if (!(elem = validate(fd)))
 	{
 		printf("Validate Error!!!\n");
-		exit(1);
+		return (1);
 	}
 	print_list(elem);
 	close(fd);
@@ -65,7 +65,7 @@ int 	main(int ac, char **av)
 			create_stack(list, 1);
 		if (!g_del_stack)
 			create_stack(list, 0);
-//		ft_dlstprint(list);
+		ft_dlstprint(list);
 		ft_putchar('\n');
 		if (!(res = algorithm(&list, num_of_tetriminos)))
 		{
