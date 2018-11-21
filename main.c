@@ -12,18 +12,25 @@ int main(int ac, char **av)
 
 	a = 'a';
 	list = NULL;
+
 	fd = open("../test.fillit", 0);
-	elem = validate(fd);
-	cords = fill_cords(elem);
-	set_dlist(cords, &list, 4);
+	if (!(elem = validate(fd)))
+	{
+		printf("Validate Error!!!\n");
+		exit(1);
+	}
+	print_list(elem);
 	close(fd);
+
+	cords = lstmap(elem, &fill_cords);
+	print_cords(cords);
+	set_dlist(cords, &list, 4);
 
 	create_stack(list, 0);
 	create_stack(list, 1);
 	ft_dlstprint(list);
 	ft_putchar('\n');
-	ft_putchar('\n');
-	algorithm(&list);
+	algorithm(&list, NULL);
 	print_stack(list, 1);
 	return (0);
 }
