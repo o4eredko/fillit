@@ -45,40 +45,42 @@ int		get_cords(int **cords, int xy, int bs)
 	return (res);
 }
 
-static void	move_cords(int **cords)
+static void	move_cords(int **cords, int length)
 {
 	int i;
 	int j;
 
 	i = -1;
-	if (get_cords(cords, 0, 0) < 3)
+	if (get_cords(cords, 0, 0) < length - 1)
 		while (++i < 4)
 			cords[i][0]++;
-	else if (get_cords(cords, 1, 0) < 3)
+	else if (get_cords(cords, 1, 0) < length - 1)
 	{
 		j = get_cords(cords, 0, 1);
-		while (++i < 4) {
+		while (++i < 4)
+		{
 			cords[i][1]++;
 			cords[i][0] -= j;
 		}
 	}
-	else if (get_cords(cords, 1, 0) == 3)
+	else if (get_cords(cords, 1, 0) == length - 1)
 		while (++i < 4)
 			cords[i][1]++;
 }
 
-void	set_cords(int **cords, t_dlist **list, int count, int nb)
+void	set_cords(int **cords, t_dlist **list, int count, int nb, int length)
 {
 	long i;
 	long j;
 
 	i = ft_dlstrowcount(*list) + 1;
-	while (get_cords(cords, 1, 0) <= 3) {
+	while (get_cords(cords, 1, 0) < length)
+	{
 		ft_dlstinsert(list, ft_dlstnew(0, 0, nb, i));
 		j = -1;
 		while (++j < 4)
-			ft_dlstinsert(list, ft_dlstnew(0, 0, count + (cords[j][0] + 1 + 4 * (cords[j][1])), i));
-		move_cords(cords);
+			ft_dlstinsert(list, ft_dlstnew(0, 0, count + (cords[j][0] + 1 + length * (cords[j][1])), i));
+		move_cords(cords, length);
 		i++;
 	}
 }
@@ -111,7 +113,8 @@ static int	set_row(t_dlist *list, int length, int count)
 }
 int			set_dlist(t_cords *cords, t_dlist **list, int length)
 {
-	int i;	int j;
+	int i;
+	int j;
 	int c1;
 
 	i = ft_clstcount(cords);
@@ -125,7 +128,7 @@ int			set_dlist(t_cords *cords, t_dlist **list, int length)
 	j = -1;
 	while (++j < i)
 	{
-		set_cords(cords->cords, list, i, j + 1);
+		set_cords(cords->cords, list, i, j + 1, length);
 		cords = cords->next;
 	}
 	CHECK((set_row(*list, length, i)));

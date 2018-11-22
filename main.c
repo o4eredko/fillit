@@ -2,6 +2,17 @@
 #include "src/fillit.h"
 #include "libft/libft.h"
 
+void	del_elem(t_dlist **elem)
+{
+	if (*elem)
+	{
+		if ((*elem)->content)
+			free((*elem)->content);
+		free(*elem);
+		*elem = NULL;
+	}
+}
+
 void	del_matrix(t_dlist **head)
 {
 	t_dlist	*tmp;
@@ -12,25 +23,28 @@ void	del_matrix(t_dlist **head)
 	row_end = ft_dlstgetend(*head, X);
 	while (*head)
 	{
-		if (*head == row_end)
-			break ;
-		tmp1 = (*head)->down;
-		col_end = ft_dlstgetend(tmp1, Y);
-		while (tmp1)
+		tmp1 = (*head)->right;
+		*head = (*head)->down;
+		col_end = ft_dlstgetend(*head, Y);
+		while (*head)
 		{
-			if (tmp1 == col_end)
+			tmp = (*head)->down;
+			if (*head == col_end)
+			{
+				del_elem(head);
 				break ;
-			tmp = tmp1->down;
-			ft_memdel(&(tmp1->content));
-			ft_memdel((void **)&tmp1);
-			tmp1 = tmp;
+			}
+			del_elem(head);
+			*head = tmp;
 		}
-		tmp = (*head)->right;
-		ft_memdel(&((*head)->content));
-		ft_memdel((void **)head);
-		*head = tmp;
+		if (*head == row_end)
+		{
+			del_elem(head);
+			break ;
+		}
+		del_elem(head);
+		*head = tmp1;
 	}
-	*head = NULL;
 }
 
 int 	main(int ac, char **av)
@@ -51,30 +65,28 @@ int 	main(int ac, char **av)
 		printf("Validate Error!!!\n");
 		return (1);
 	}
-	print_list(elem);
 	close(fd);
 
 	cords = lstmap(elem, &fill_cords);
 	num_of_tetriminos = ft_clstcount(cords);
 	map_size = ft_sqrt(num_of_tetriminos * 4);
 	print_cords(cords);
-	while (!res)
-	{
-		set_dlist(cords, &list, map_size);
-		if (!g_res_stack)
-			create_stack(list, 1);
-		if (!g_del_stack)
-			create_stack(list, 0);
-		ft_dlstprint(list);
-		ft_putchar('\n');
-		if (!(res = algorithm(&list, num_of_tetriminos)))
-		{
-			while (g_res_top--)
-				;
-			del_matrix(&list);
-		}
-		map_size++;
-	}
-	print_map(list, create_matrix(map_size - 1), map_size - 1);
+	set_dlist(cords, &list, 4);
+	del_matrix(&list);
+	set_dlist(cords, &list, 5);
+//	if (!g_res_stack)
+//		create_stack(list, 1);
+//	if (!g_del_stack)
+//		create_stack(list, 0);
+	ft_dlstprint(list);
+	ft_putchar('\n');
+//	if (!(res = algorithm(&list, num_of_tetriminos)))
+//	{
+//		while (g_res_top--)
+//			;
+//		del_matrix(&list);
+//	}
+//	print_map(list, create_matrix(4), 4);
 	return (0);
+
 }
