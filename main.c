@@ -69,7 +69,7 @@ int 	main(int ac, char **av)
 
 	cords = lstmap(elem, &fill_cords);
 	num_of_tetriminos = ft_clstcount(cords);
-	map_size = 2;
+	map_size = ft_sqrt(4 * num_of_tetriminos);
     while (!set_dlist(cords, &list, map_size))
         map_size++;
 	print_cords(cords);
@@ -78,21 +78,17 @@ int 	main(int ac, char **av)
 	if (!g_del_stack)
 		create_stack(list, 0);
     ft_dlstprint(list);
+    ft_putstr("\n\n");
 	while (!(algorithm(&list, num_of_tetriminos)))
 	{
         ft_putstr("\n\n");
 		del_matrix(&list);
 		set_dlist(cords, &list, ++map_size - 1);
-        ft_dlstprint(list);
+        //ft_dlstprint(list);
+        g_res_top = -1;
 	}
     ft_putstr("\n\n");
     ft_putstr("\n\n");
-	print_stack(list, 1);
-//	if ()
-//	{
-//		while (g_res_top--)
-//			;
-//		del_matrix(&list);
-//	print_map(list, create_matrix(4), 4);
+	print_map(list, create_matrix(map_size), map_size);
 	return (0);
 }
