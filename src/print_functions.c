@@ -30,7 +30,7 @@ void	print_map(t_dlist *head, char **map, int size)
 		{
 			x = ft_atoi((ft_dlstfind(head, row->cords[X], 0))->content) / 10;
 			y = ft_atoi((ft_dlstfind(head, row->cords[X], 0))->content) % 10;
-			map[y - 1][x - 1] = 'A' + (g_res_top + 1);
+			map[y - 1][x - 1] = (char)('A' + (g_res_top + 1));
 			row = row->right;
 		}
 	}
@@ -110,9 +110,9 @@ void	print_stack(t_dlist *head, int stack_type)
 		top = g_del_top;
 		while (top != -1)
 		{
-			ft_putnbr((g_del_stack[top])->cords[X]);
+			ft_putlong((g_del_stack[top])->cords[X]);
 			ft_putstr(", ");
-			ft_putnbr((g_del_stack[top])->cords[Y]);
+			ft_putlong((g_del_stack[top])->cords[Y]);
 			ft_putstr("\n");
 			top--;
 		}

@@ -43,7 +43,7 @@ void			clear_stack(void)
 		pop(1);
 }
 
-static void		reduce_matrix(t_dlist **head, t_dlist *row, int k)
+static int		reduce_matrix(t_dlist **head, t_dlist *row, int k)
 {
 	t_dlist	*tmp;
 	t_dlist	*tmp1;
@@ -65,27 +65,27 @@ static void		reduce_matrix(t_dlist **head, t_dlist *row, int k)
 			break ;
 		tmp = tmp->right;
 	}
-	algorithm(head, k);
+	return (algorithm(head, k));
 }
 
 int				algorithm(t_dlist **head, int num_of_tetriminos)
 {
 	t_dlist	*pivot;
+	int res;
 
+	res = 0;
 	if ((*head)->right->c_size == sizeof(char))
 	{
 		pivot = (*head)->right;
-		while (pivot->down && pivot->down->cords[Y] > pivot->cords[Y])
+		while (!res && pivot->down && pivot->down->cords[Y] > pivot->cords[Y])
 		{
 			pivot = pivot->down;
 			push(pivot, 1);
-			reduce_matrix(head, pivot, num_of_tetriminos);
+			res = reduce_matrix(head, pivot, num_of_tetriminos);
 			reload_matrix(head);
-			if (g_res_top == num_of_tetriminos - 1)
-				return (1);
-			else if (g_res_top > num_of_tetriminos - 1)
-				return (0);
 		}
+		if (g_res_top != num_of_tetriminos - 1 && !res)
+			return (0);
 	}
-	return (0);
+	return (1);
 }

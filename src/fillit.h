@@ -61,6 +61,7 @@ void				print_map(t_dlist *head, char **map, int size);
 char				**create_matrix(int start_size);
 
 /*Additional funcs*/
+void				move_cords(int **cords, int xy);
 void				print_list(t_shape *head);
 void				print_cords(t_cords *head);
 void				print_stack(t_dlist *head, int stack_type);
