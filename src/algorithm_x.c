@@ -27,7 +27,7 @@ static void		reload_matrix(t_dlist **head)
 {
 	t_dlist *elem;
 
-	while (g_del_top != -1)
+	while (g_del_top != -1 && g_del_stack[g_del_top])
 	{
 		elem = pop(0);
 		if (!elem->cords[X])
@@ -35,6 +35,8 @@ static void		reload_matrix(t_dlist **head)
 		else if (!elem->cords[Y])
 			restore_col(head, elem);
 	}
+	if (g_del_top > -1)
+		pop(0);
 }
 
 
@@ -45,6 +47,7 @@ static int		reduce_matrix(t_dlist **head, t_dlist *row, int k)
 
 	if ((tmp = ft_dlstfind(*head, 0, row->cords[Y])))
 		tmp = tmp->right;
+	push(NULL, 0);
 	while (tmp && tmp->right)
 	{
 		tmp1 = (ft_dlstfind(*head, tmp->cords[X], 0))->down;
@@ -60,31 +63,44 @@ static int		reduce_matrix(t_dlist **head, t_dlist *row, int k)
 			break ;
 		tmp = tmp->right;
 	}
-	return (algorithm(head, k));
+//	return (algorithm(head, k));
+	return  (1);
 }
 
 int				algorithm(t_dlist **head, int num_of_tetriminos)
 {
-	t_dlist	*pivot;
-	int res;
-
-	res = 0;
+//	t_dlist	*pivot;
+//	int res;
+//
+//	res = 0;
+//	ft_dlstprint(*head);
+//	ft_putstr("\n\n");
+//	if ((*head)->right && (*head)->right->c_size == sizeof(char))
+//	{
+//		pivot = (*head)->right;
+//		while (!res && pivot->down && pivot->down->cords[Y] > pivot->cords[Y])
+//		{
+//			pivot = pivot->down;
+//			push(pivot, 1);
+//			res = reduce_matrix(head, pivot, num_of_tetriminos);
+//			reload_matrix(head);
+//			ft_dlstprint(*head);
+//			ft_putstr("\n\n");
+//		}
+//		if (!res && g_res_top != num_of_tetriminos - 1)
+//			return (0);
+//	}
+//	return (1);
 	ft_dlstprint(*head);
 	ft_putstr("\n\n");
-	if ((*head)->right && (*head)->right->c_size == sizeof(char))
-	{
-		pivot = (*head)->right;
-		while (!res && pivot->down && pivot->down->cords[Y] > pivot->cords[Y])
-		{
-			pivot = pivot->down;
-			push(pivot, 1);
-			res = reduce_matrix(head, pivot, num_of_tetriminos);
-			reload_matrix(head);
-		}
-		if (!res && g_res_top != num_of_tetriminos - 1)
-		{
-			return (0);
-		}
-	}
+	reduce_matrix(head, (*head)->right->down, num_of_tetriminos);
+	ft_dlstprint(*head);
+	ft_putstr("\n\n");
+	reduce_matrix(head, (*head)->right->down, num_of_tetriminos);
+	ft_dlstprint(*head);
+	ft_putstr("\n\n");
+	reload_matrix(head);
+	ft_dlstprint(*head);
+
 	return (1);
 }

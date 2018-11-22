@@ -77,7 +77,7 @@ int 	main(int ac, char **av)
 		create_stack(list, 1);
 	if (!g_del_stack)
 		create_stack(list, 0);
-    ft_dlstprint(list);
+//    ft_dlstprint(list);
     ft_putstr("\n\n");
 	while (!(algorithm(&list, num_of_tetriminos)))
 	{
@@ -89,6 +89,6 @@ int 	main(int ac, char **av)
 	}
     ft_putstr("\n\n");
     ft_putstr("\n\n");
-	print_map(list, create_matrix(map_size), map_size);
+//	print_map(list, create_matrix(map_size), map_size);
 	return (0);
 }

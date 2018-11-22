@@ -42,8 +42,8 @@ t_dlist	*pop(int stack_type)
 
 void	create_stack(t_dlist *list, int stack_type)
 {
-	int cols;
-	int rows;
+	long cols;
+    long rows;
 
 	cols = (ft_dlstgetend(list, X))->cords[X];
 	rows = (ft_dlstgetend(list, Y))->cords[Y];

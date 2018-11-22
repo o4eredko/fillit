@@ -21,7 +21,7 @@ t_dlist	*ft_dlstgetend(t_dlist	*list, char xy)
 		return (0);
 	if (!xy)
 	{
-		while (list->right)
+		while (list->right && list->right->cords[X] > list->cords[X])
 		{
 			if (list->right == head)
 				break;
@@ -29,7 +29,7 @@ t_dlist	*ft_dlstgetend(t_dlist	*list, char xy)
 		}
 		return (list);
 	}
-	while (list->down)
+	while (list->down && list->down->cords[Y] > list->cords[Y])
 	{
 		if (list->down == head)
 			break ;
