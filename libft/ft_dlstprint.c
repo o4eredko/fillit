@@ -40,7 +40,7 @@ size_t		print_size(t_dlist *elem)
 	}
 	else if (elem->c_size == sizeof(char))
 		return (1);
-	return (elem->c_size - 1);
+	return (elem->c_size);
 }
 
 void	print_header(t_dlist *tmp)
@@ -49,10 +49,8 @@ void	print_header(t_dlist *tmp)
 	{
 		if (tmp->c_size == sizeof(char))
 			ft_putchar(*(char*)tmp->content);
-		else if (tmp->c_size == sizeof(int))
-			ft_putnbr(*(int*)tmp->content);
 		else if (tmp->c_size == sizeof(long))
-			ft_putlong(*(int*)tmp->content);
+			ft_putlong(*(long*)tmp->content);
 		else
 			ft_putstr((char*)tmp->content);
 		if (tmp->cords[0] != 0 || tmp->cords[1] != 0)

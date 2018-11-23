@@ -69,8 +69,6 @@ int				algorithm(t_dlist **head, int num_of_tetriminos)
 	res = 0;
 	if ((*head)->right && (*head)->right->c_size == sizeof(char))
 	{
-	    if (!(*head)->right->down)
-	        return (0);
 		pivot = (*head)->right;
 		while (!res && pivot->down && pivot->down->cords[Y] > pivot->cords[Y])
 		{
@@ -81,8 +79,10 @@ int				algorithm(t_dlist **head, int num_of_tetriminos)
 				pop(1);
 			reload_matrix(head);
 		}
-		if (g_res_top != num_of_tetriminos - 1 || !res)
+		if (g_res_top != num_of_tetriminos - 1)
             return (0);
 	}
-    return (1);
+	if (g_res_top == num_of_tetriminos - 1)
+    	return (1);
+	return (0);
 }

@@ -8,4 +8,5 @@ add_executable(fillit main.c libft/ft_putlong libft/ft_dlstfind.c libft/ft_dlstg
         src/stack.c src/print_functions.c libft/ft_putendl.c libft/ft_memalloc.c libft/ft_dlstgetn.c src/delete_restore.c
         src/row_col_functions.c src/fill_cords.c src/set_dlist.c src/validate.c libft/ft_dlstaddcolumn.c libft/ft_dlstrowcount.c
         libft/ft_strlen.c libft/ft_strnew.c libft/get_next_line.c libft/ft_lstnew.c src/create_matrix.c
-        libft/ft_memset.c libft/ft_strdel.c libft/ft_memdel.c libft/ft_atoi.c libft/ft_lstadd.c)
+        libft/ft_memset.c libft/ft_strdel.c libft/ft_memdel.c libft/ft_atoi.c libft/ft_lstadd.c src/create_matrix.c src/set_dlist.c
+        libft/ft_itoa.c libft/ft_strjoin.c libft/ft_strcat.c libft/ft_strchr.c)

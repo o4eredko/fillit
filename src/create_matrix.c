@@ -35,8 +35,8 @@ char	**create_matrix(int start_size)
 	CHECK_ERR((matrix = (char **)malloc(sizeof(char *) * start_size)));
 	while (++i < start_size)
 	{
-		CHECK_ERR((matrix[i] = ft_strnew(start_size)));
-		ft_memset(matrix[i], '.', start_size);
+		CHECK_ERR((matrix[i] = ft_strnew((size_t)start_size)));
+		ft_memset(matrix[i], '.', (size_t)start_size);
 	}
 	return (matrix);
 }

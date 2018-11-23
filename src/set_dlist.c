@@ -90,7 +90,6 @@ static int	set_row(t_dlist *list, int length, int count)
 {
 	int i;
 	int j;
-	char *c;
 
 	i = 1;
 	while (count-- >= 0)
@@ -100,11 +99,8 @@ static int	set_row(t_dlist *list, int length, int count)
 		j = 1;
 		while (j <= length)
 		{
-			CHECK((c = ft_strnew(sizeof(char) * 2)));
-			c[0] = (char)(j + 48);
-			c[1] = (char)(i + 48);
-			list->content = c;
-			list->c_size = 3;
+			list->content = ft_strjoin(ft_strjoin(ft_itoa(j), ":"), ft_itoa(i));
+			list->c_size = ft_strlen((char*)list->content);
 			j++;
 			list = list->right;
 		}
@@ -112,6 +108,7 @@ static int	set_row(t_dlist *list, int length, int count)
 	}
 	return (1);
 }
+
 int			set_dlist(t_cords *cords, t_dlist **list, int length)
 {
 	int i;

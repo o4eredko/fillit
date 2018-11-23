@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "src/fillit.h"
 #include "libft/libft.h"
+#include <sys/time.h>
 
 void	del_elem(t_dlist **elem)
 {
@@ -53,16 +54,20 @@ int 	main(int ac, char **av)
 	t_shape *elem;
 	t_cords	*cords;
 	int		fd;
-	int		res;
 	int		map_size;
 	int		num_of_tetriminos;
 
+//	struct timeval  tv1, tv2;
+
 	list = NULL;
-	res = 0;
-	fd = open("../generator/test.fillit", 0);
+
+//	gettimeofday(&tv1, NULL);
+
+//	fd = open("../generator/test.fillit", 0);
+	fd = open(av[1], 0);
 	if (!(elem = validate(fd)))
 	{
-		printf("Validate Error!!!\n");
+		printf("error\n");
 		return (1);
 	}
 	close(fd);
@@ -70,18 +75,15 @@ int 	main(int ac, char **av)
 	cords = lstmap(elem, &fill_cords);
 	num_of_tetriminos = ft_clstcount(cords);
 	map_size = ft_sqrt(4 * num_of_tetriminos);
-	if (num_of_tetriminos)
-		map_size++;
+//	if (num_of_tetriminos)
+//		map_size++;
     while (!set_dlist(cords, &list, map_size))
         map_size++;
-//	print_cords(cords);
 	if (!g_res_stack)
 		create_stack(list, 1);
 	if (!g_del_stack)
 		create_stack(list, 0);
 //    ft_dlstprint(list);
-//    ft_putstr("\n\n");
-    g_counter = 0;
 	while (!(algorithm(&list, num_of_tetriminos)))
 	{
 //		ft_putstr("\n\n");
@@ -90,8 +92,14 @@ int 	main(int ac, char **av)
 //        ft_dlstprint(list);
 		g_res_top = -1;
 	}
-	ft_putstr("\n\n");
-	print_stack(list, 1);
-    print_map(list, create_matrix(map_size), map_size);
+//	ft_putstr("\n\n");
+//	print_stack(list, 1, num_of_tetriminos);
+    print_map(list, create_matrix(map_size), map_size, num_of_tetriminos);
+
+//	gettimeofday(&tv2, NULL);
+
+//	printf ("\nTotal time = %f seconds\n",
+//			(double) (tv2.tv_usec - tv1.tv_usec) / 1000000 +
+//			(double) (tv2.tv_sec - tv1.tv_sec));
  	return (0);
 }

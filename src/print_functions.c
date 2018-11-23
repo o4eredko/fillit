@@ -17,10 +17,10 @@ void	print_usage()
 	ft_putendl("usage: ./fillit soruse_file");
 }
 
-void	print_map(t_dlist *head, char **map, int size)
+void	print_map(t_dlist *head, char **map, int size, int k)
 {
-	int		x;
-	int		y;
+	long	x;
+	long	y;
 	t_dlist *row;
 
 	while (g_res_top != -1)
@@ -28,8 +28,8 @@ void	print_map(t_dlist *head, char **map, int size)
 		row = (ft_dlstfind(head, 0, (pop(1))->cords[Y]))->right->right;
 		while (row && row->left->cords[X] < row->cords[X])
 		{
-			x = ft_atoi((ft_dlstfind(head, row->cords[X], 0))->content) / 10;
-			y = ft_atoi((ft_dlstfind(head, row->cords[X], 0))->content) % 10;
+			x = ft_atoi(ft_dlstgetn(head, row->cords[X], X)->content);
+			y = ft_atoi(ft_strchr((ft_dlstgetn(head, row->cords[X], X)->content), ':') + 1);
 			map[y - 1][x - 1] = (char)('A' + (g_res_top + 1));
 			row = row->right;
 		}
@@ -79,7 +79,7 @@ void	print_cords(t_cords *head)
 	}
 }
 
-void	print_row(t_dlist *head, t_dlist *row)
+void	print_row(t_dlist *head, t_dlist *row, int k)
 {
 	long x;
 	long y;
@@ -88,8 +88,8 @@ void	print_row(t_dlist *head, t_dlist *row)
 	row = row->right->right;
 	while (row)
 	{
-		x = ft_atoi((ft_dlstfind(head, row->cords[X], 0))->content) / 10;
-		y = ft_atoi((ft_dlstfind(head, row->cords[X], 0))->content) % 10;
+		x = ft_atoi(ft_dlstgetn(head, row->cords[X], X)->content);
+		y = ft_atoi(ft_strchr((ft_dlstgetn(head, row->cords[X], X)->content), ':') + 1);
 		ft_putstr("(");
 		ft_putlong(x);
 		ft_putstr(", ");
@@ -101,7 +101,7 @@ void	print_row(t_dlist *head, t_dlist *row)
 	}
 }
 
-void	print_stack(t_dlist *head, int stack_type)
+void	print_stack(t_dlist *head, int stack_type, int k)
 {
 	int top;
 
@@ -122,7 +122,7 @@ void	print_stack(t_dlist *head, int stack_type)
 		top = g_res_top;
 		while (top != -1)
 		{
-			print_row(head, g_res_stack[top]);
+			print_row(head, g_res_stack[top], k);
 			ft_putstr("\n");
 			top--;
 		}

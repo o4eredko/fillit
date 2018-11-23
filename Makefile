@@ -12,16 +12,16 @@
 
 NAME = fillit
 
-SRC = src/validate.c src/create_matrix.c src/print_functions.c src/fill_cords.c
+SRC = src/*.c *.c
 
-OBJ = validate.o create_matrix.o print_functions.o fill_cords.o
+OBJ = *.o
 
 all: $(NAME)
 
 $(NAME):
 	make -C libft/
 	gcc -c $(SRC)
-	gcc -Wall -W -Werror -o $(NAME) $(OBJ) -L libft/ -lft
+	gcc -o $(NAME) $(OBJ) -L libft/ -lft
 
 clean:
 	make -C libft/ clean
