@@ -83,12 +83,12 @@ int 	main(int ac, char **av)
 	{
         ft_putstr("\n\n");
 		del_matrix(&list);
-		set_dlist(cords, &list, ++map_size - 1);
+		set_dlist(cords, &list, ++map_size);
         //ft_dlstprint(list);
         g_res_top = -1;
 	}
     ft_putstr("\n\n");
     ft_putstr("\n\n");
-//	print_map(list, create_matrix(map_size), map_size);
-	return (0);
+    print_map(list, create_matrix(map_size), map_size);
+ 	return (0);
 }

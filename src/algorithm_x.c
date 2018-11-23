@@ -68,23 +68,23 @@ int				algorithm(t_dlist **head, int num_of_tetriminos)
 	ft_putstr("\n\n");
 	if ((*head)->right && (*head)->right->c_size == sizeof(char))
 	{
+	    if (!(*head)->right->down)
+	        return (0);
 		pivot = (*head)->right;
-		while (pivot->down)
+		while (!res && pivot->down)
 		{
 			pivot = pivot->down;
 			push(pivot, 1);
 			res = reduce_matrix(head, pivot, num_of_tetriminos);
 			if (!res)
 			{
-				pop(1);
-				return (0);
-			}
+                pop(1);
+                return (0);
+            }
 			reload_matrix(head);
-			if (g_res_top == num_of_tetriminos - 1)
-				return (1);
 		}
-		if (g_res_top != num_of_tetriminos - 1 && !res)
-			return (0);
+		if (g_res_top != num_of_tetriminos - 1 || !res)
+            return (0);
 	}
-	return (1);
+    return (1);
 }
