@@ -25,7 +25,6 @@ void	del_matrix(t_dlist **head)
 	while (*head)
 	{
 		tmp1 = (*head)->right;
-		*head = (*head)->down;
 		col_end = ft_dlstgetend(*head, Y);
 		while (*head)
 		{
@@ -57,49 +56,53 @@ int 	main(int ac, char **av)
 	int		map_size;
 	int		num_of_tetriminos;
 
-//	struct timeval  tv1, tv2;
+	struct timeval  tv1, tv2;
 
 	list = NULL;
 
-//	gettimeofday(&tv1, NULL);
+	gettimeofday(&tv1, NULL);
 
-//	fd = open("../generator/test.fillit", 0);
-	fd = open(av[1], 0);
+	fd = open("../generator/test.fillit", 0);
+//	fd = open(av[1], 0);
 	if (!(elem = validate(fd)))
 	{
 		printf("error\n");
 		return (1);
 	}
 	close(fd);
-
+	g_counter = 0;
 	cords = lstmap(elem, &fill_cords);
 	num_of_tetriminos = ft_clstcount(cords);
 	map_size = ft_sqrt(4 * num_of_tetriminos);
-//	if (num_of_tetriminos)
+//	if (num_of_tetriminos == 16)
 //		map_size++;
     while (!set_dlist(cords, &list, map_size))
-        map_size++;
+	{
+		del_matrix(&list);
+		map_size++;
+	}
 	if (!g_res_stack)
 		create_stack(list, 1);
 	if (!g_del_stack)
 		create_stack(list, 0);
 //    ft_dlstprint(list);
-	while (!(algorithm(&list, num_of_tetriminos)))
+	while (algorithm(&list, num_of_tetriminos) <= 0)
 	{
 //		ft_putstr("\n\n");
 		del_matrix(&list);
 		set_dlist(cords, &list, ++map_size);
 //        ft_dlstprint(list);
 		g_res_top = -1;
+		g_counter = 0;
 	}
 //	ft_putstr("\n\n");
 //	print_stack(list, 1, num_of_tetriminos);
     print_map(list, create_matrix(map_size), map_size, num_of_tetriminos);
 
-//	gettimeofday(&tv2, NULL);
+	gettimeofday(&tv2, NULL);
 
-//	printf ("\nTotal time = %f seconds\n",
-//			(double) (tv2.tv_usec - tv1.tv_usec) / 1000000 +
-//			(double) (tv2.tv_sec - tv1.tv_sec));
+	printf ("\nTotal time = %f seconds\n",
+			(double) (tv2.tv_usec - tv1.tv_usec) / 1000000 +
+			(double) (tv2.tv_sec - tv1.tv_sec));
  	return (0);
 }

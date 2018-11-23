@@ -41,7 +41,7 @@ void	move_cords(int **cords, int xy)
 	while(++i < 4)
 		cords[i][xy] -= tmp;
 	if (!xy)
-		move_cords(cords, 1);
+		move_cords(cords, Y);
 }
 
 t_cords	*fill_cords(t_shape *elem)
