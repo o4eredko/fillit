@@ -71,30 +71,3 @@ t_cords	*fill_cords(t_shape *elem)
 	move_cords(res->cords, 0);
 	return (res);
 }
-
-/*int		main(int ac, char **av)
-{
-	int		fd;
-	t_shape	*head;
-	t_cords	*cords;
-
-	if (ac == 2)
-	{
-		if ((fd = open(av[1], 0)) == -1)
-		{
-			printf("Open error\n");
-			return (1);
-		}
-		if (!(head = validate(fd)))
-			printf("error\n");
-		print_list(head);
-		cords = lstmap(head, &fill_cords);
-		print_cords(cords);
-		if ((close(fd) == -1))
-		{
-			printf("Close error\n");
-			return (1);
-		}
-	}
-	return (0);
-}*/

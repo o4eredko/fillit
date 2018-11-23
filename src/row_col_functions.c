@@ -40,9 +40,9 @@ void			restore_col(t_dlist **head, t_dlist *col)
     while (tmp)
     {
         restore_in_col(tmp);
+		if (tmp == col_end)
+			break ;
         tmp = tmp->down;
-        if (tmp == col_end)
-            break ;
     }
 }
 
@@ -75,9 +75,9 @@ void			restore_row(t_dlist **head, t_dlist *row)
     while (tmp)
     {
         restore_in_row(tmp);
+		if (tmp == row_end)
+			break ;
         tmp = tmp->right;
-        if (tmp == row_end)
-            break ;
     }
 }
 
@@ -86,13 +86,16 @@ void			delete_col(t_dlist **head, long x)
 	t_dlist	*tmp;
 	t_dlist *col_end;
 
-	if ((*head)->down && (tmp = ft_dlstfind(*head, 0, (*head)->down->cords[Y])))
+	if ((*head)->down)
+	{
+		tmp = (*head)->down;
 		while (tmp)
 		{
 			if (tmp->right && tmp->right->cords[X] == x)
 				tmp->right = tmp->right->right;
 			tmp = tmp->down;
 		}
+	}
 	if ((tmp = ft_dlstfind(*head, x, 0)))
 	{
 	    col_end = ft_dlstgetend(tmp, Y);
@@ -100,9 +103,9 @@ void			delete_col(t_dlist **head, long x)
         while (tmp)
         {
             delete_from_col(tmp);
+			if (tmp == col_end)
+				break ;
             tmp = tmp->down;
-            if (tmp == col_end)
-                break ;
         }
 	}
 }
@@ -112,14 +115,16 @@ void			delete_row(t_dlist **head, long y)
 	t_dlist	*tmp;
 	t_dlist *row_end;
 
-	if ((*head)->right
-		&& (tmp = ft_dlstfind(*head, (*head)->right->cords[X], 0)))
+	if ((*head)->right)
+	{
+		tmp = (*head)->right;
 		while (tmp)
 		{
 			if (tmp->down && tmp->down->cords[Y] == y)
 				tmp->down = tmp->down->down;
 			tmp = tmp->right;
 		}
+	}
 	if ((tmp = ft_dlstfind(*head, 0, y)))
 	{
 	    row_end = ft_dlstgetend(tmp, X);
@@ -127,9 +132,9 @@ void			delete_row(t_dlist **head, long y)
         while (tmp)
         {
             delete_from_row(tmp);
+			if (tmp == row_end)
+				break ;
             tmp = tmp->right;
-            if (tmp == row_end)
-                break ;
         }
 	}
 }

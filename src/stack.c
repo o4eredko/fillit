@@ -51,7 +51,7 @@ void	create_stack(t_dlist *list, int stack_type)
 	{
 		g_del_top = -1;
 		if (!(g_del_stack = (t_dlist **) ft_memalloc(sizeof(t_dlist *)
-				* (cols + rows))))
+				* (cols + rows) * 2)))
 			return ;
 	}
 	else

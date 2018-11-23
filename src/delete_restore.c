@@ -15,17 +15,37 @@
 void			delete_from_col(t_dlist *elem)
 {
 	if (elem->left)
-		elem->left->right = elem->right;
+	{
+		if (elem->left == elem->right)
+			elem->left->right = NULL;
+		else
+			elem->left->right = elem->right;
+	}
 	if (elem->right)
-		elem->right->left = elem->left;
+	{
+		if (elem->right == elem->left)
+			elem->right->left = NULL;
+		else
+			elem->right->left = elem->left;
+	}
 }
 
 void			delete_from_row(t_dlist *elem)
 {
 	if (elem->down)
-		elem->down->up = elem->up;
+	{
+		if (elem->down == elem->up)
+			elem->down->up = NULL;
+		else
+			elem->down->up = elem->up;
+	}
 	if (elem->up)
-		elem->up->down = elem->down;
+	{
+		if (elem->up == elem->down)
+			elem->up->down = NULL;
+		else
+			elem->up->down = elem->down;
+	}
 }
 
 void			restore_in_col(t_dlist *elem)
