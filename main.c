@@ -59,7 +59,7 @@ int 	main(int ac, char **av)
 
 	list = NULL;
 	res = 0;
-	fd = open("../test.fillit", 0);
+	fd = open("../generator/test.fillit", 0);
 	if (!(elem = validate(fd)))
 	{
 		printf("Validate Error!!!\n");
@@ -70,25 +70,28 @@ int 	main(int ac, char **av)
 	cords = lstmap(elem, &fill_cords);
 	num_of_tetriminos = ft_clstcount(cords);
 	map_size = ft_sqrt(4 * num_of_tetriminos);
+	if (num_of_tetriminos)
+		map_size++;
     while (!set_dlist(cords, &list, map_size))
         map_size++;
-	print_cords(cords);
+//	print_cords(cords);
 	if (!g_res_stack)
 		create_stack(list, 1);
 	if (!g_del_stack)
 		create_stack(list, 0);
 //    ft_dlstprint(list);
-    ft_putstr("\n\n");
+//    ft_putstr("\n\n");
+    g_counter = 0;
 	while (!(algorithm(&list, num_of_tetriminos)))
 	{
-        ft_putstr("\n\n");
+//		ft_putstr("\n\n");
 		del_matrix(&list);
 		set_dlist(cords, &list, ++map_size);
-        //ft_dlstprint(list);
-        g_res_top = -1;
+//        ft_dlstprint(list);
+		g_res_top = -1;
 	}
-    ft_putstr("\n\n");
-    ft_putstr("\n\n");
+	ft_putstr("\n\n");
+	print_stack(list, 1);
     print_map(list, create_matrix(map_size), map_size);
  	return (0);
 }

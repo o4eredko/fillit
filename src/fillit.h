@@ -37,6 +37,7 @@ t_dlist				**g_del_stack;
 t_dlist				**g_res_stack;
 int					g_del_top;
 int					g_res_top;
+int 				g_counter;
 
 t_shape				*validate(int fd);
 void				print_usage(void);
