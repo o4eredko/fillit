@@ -119,7 +119,7 @@ int				algorithm(t_dlist **head, int num_of_tetriminos)
 				return (-1);
 		}
 	}
-	if (count_empty_cols(*head) <= g_empty + 4)
+	if (count_empty_cols(*head) / (num_of_tetriminos - g_res_top + 1) <= 4)
 		return (-1);
 	return (g_res_top == num_of_tetriminos - 1);
 }
