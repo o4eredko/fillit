@@ -25,13 +25,13 @@ t_cords	*lstmap(t_shape *lst, t_cords *(*f)(t_shape *elem))
 	return (NULL);
 }
 
-void	move_cords(int **cords, int xy)
+void	move_cords(int **cords, int xy, int length)
 {
 	int i;
 	int tmp;
 
 	i = -1;
-	tmp = 4;
+	tmp = length;
 	while (++i < 4)
 	{
 		if (cords[i][xy] < tmp)
@@ -41,7 +41,7 @@ void	move_cords(int **cords, int xy)
 	while(++i < 4)
 		cords[i][xy] -= tmp;
 	if (!xy)
-		move_cords(cords, Y);
+		move_cords(cords, Y, length);
 }
 
 t_cords	*fill_cords(t_shape *elem)
@@ -68,6 +68,6 @@ t_cords	*fill_cords(t_shape *elem)
 		}
 	}
 	res->cords -= 4;
-	move_cords(res->cords, 0);
+	move_cords(res->cords, 0, 4);
 	return (res);
 }

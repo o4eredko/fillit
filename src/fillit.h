@@ -61,7 +61,7 @@ t_cords				*lstmap(t_shape *lst, t_cords *(*f)(t_shape *elem));
 t_cords				*fill_cords(t_shape *elem);
 void				print_map(t_dlist *head, char **map, int size, int k);
 char				**create_matrix(int start_size);
-void				move_cords(int **cords, int xy);
+void				move_cords(int **cords, int xy, int length);
 
 /*Additional funcs*/
 void				print_list(t_shape *head);

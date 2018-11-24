@@ -83,8 +83,7 @@ void	set_cords(int **cords, t_dlist **list, int count, int nb, int length)
 		move_cords_l(cords, length);
 		i++;
 	}
-	move_cords(cords, X);
-	move_cords(cords, X);
+	move_cords(cords, X, length);
 }
 
 static int	set_row(t_dlist *list, int length, int count)

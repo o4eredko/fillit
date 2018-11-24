@@ -111,15 +111,12 @@ int				algorithm(t_dlist **head, int num_of_tetriminos)
 					reload_matrix(head);
 					return (0);
 				}
-				else
-					pop(1);
+				pop(1);
 			}
 			reload_matrix(head);
 			if (res == -1)
 				return (-1);
 		}
 	}
-	if (count_empty_cols(*head) / (num_of_tetriminos - g_res_top + 1) <= 4)
-		return (-1);
 	return (g_res_top == num_of_tetriminos - 1);
 }
