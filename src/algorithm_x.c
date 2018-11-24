@@ -61,25 +61,65 @@ int		reduce_matrix(t_dlist **head, t_dlist *row, int k)
 	return (algorithm(head, k));
 }
 
+int 			compare_shapes(t_dlist *sh1, t_dlist *sh2)
+{
+	sh1 = sh1->right->right;
+	sh2 = sh2->right->right;
+
+	if (sh1->right->cords[X] - sh1->cords[X] == sh2->right->cords[X] - sh2->cords[X]
+	&& sh1->right->right->cords[X] - sh1->cords[X] == sh2->right->right->cords[X] - sh2->cords[X]
+	&& sh1->right->right->right->cords[X] - sh1->cords[X] == sh2->right->right->right->cords[X] - sh2->cords[X])
+		return (1);
+	return (0);
+}
+
+int 			count_empty_cols(t_dlist *head)
+{
+	int counter;
+
+	counter = 0;
+	head = head->right;
+	while (head && head->c_size == sizeof(char))
+		head = head->right;
+	while (head)
+	{
+		counter++;
+		head = head->right;
+	}
+	return (counter);
+}
+
 int				algorithm(t_dlist **head, int num_of_tetriminos)
 {
 	t_dlist	*pivot;
 	int		res;
-	if (g_counter++ > 2000000)
-		return (-1);
+
+//	if (g_counter++ > 2000000)
+//		return (-1);
 	res = 0;
 	if ((pivot = (*head)->right))
 	{
 		while (!res && pivot->down && pivot->down->cords[Y] > pivot->cords[Y])
 		{
 			pivot = pivot->down;
-			push(pivot, 1);
+			push(ft_dlstfind(*head, 0, pivot->cords[Y]), 1);
 			if (!(res = reduce_matrix(head, pivot, num_of_tetriminos)))
-				pop(1);
+			{
+				if (g_res_top > 0 && compare_shapes(g_res_stack[g_res_top - 1], g_res_stack[g_res_top]))
+				{
+					pop(1);
+					reload_matrix(head);
+					return (0);
+				}
+				else
+					pop(1);
+			}
 			reload_matrix(head);
 			if (res == -1)
 				return (-1);
 		}
 	}
+	if (count_empty_cols(*head) <= g_empty + 4)
+		return (-1);
 	return (g_res_top == num_of_tetriminos - 1);
 }

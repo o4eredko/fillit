@@ -62,7 +62,7 @@ int 	main(int ac, char **av)
 
 	gettimeofday(&tv1, NULL);
 
-	fd = open("../generator/test.fillit", 0);
+	fd = open("../test.fillit", 0);
 //	fd = open(av[1], 0);
 	if (!(elem = validate(fd)))
 	{
@@ -74,8 +74,7 @@ int 	main(int ac, char **av)
 	cords = lstmap(elem, &fill_cords);
 	num_of_tetriminos = ft_clstcount(cords);
 	map_size = ft_sqrt(4 * num_of_tetriminos);
-//	if (num_of_tetriminos == 16)
-//		map_size++;
+	g_empty = map_size * map_size - num_of_tetriminos * 4;
     while (!set_dlist(cords, &list, map_size))
 	{
 		del_matrix(&list);
@@ -85,18 +84,15 @@ int 	main(int ac, char **av)
 		create_stack(list, 1);
 	if (!g_del_stack)
 		create_stack(list, 0);
-//    ft_dlstprint(list);
 	while (algorithm(&list, num_of_tetriminos) <= 0)
 	{
-//		ft_putstr("\n\n");
 		del_matrix(&list);
 		set_dlist(cords, &list, ++map_size);
-//        ft_dlstprint(list);
 		g_res_top = -1;
 		g_counter = 0;
 	}
-//	ft_putstr("\n\n");
-//	print_stack(list, 1, num_of_tetriminos);
+	ft_putstr("\n\n");
+	print_stack(list, 1, num_of_tetriminos);
     print_map(list, create_matrix(map_size), map_size, num_of_tetriminos);
 
 	gettimeofday(&tv2, NULL);
