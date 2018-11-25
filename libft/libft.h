@@ -108,10 +108,12 @@ t_dlist				*ft_dlstfind(t_dlist *head, long x, long y);
 t_dlist				*ft_dlstgetend(t_dlist	*list, char xy);
 t_dlist				*ft_dlstgetn(t_dlist *list, long n, char xy);
 int					ft_dlstinsert(t_dlist **list, t_dlist *elem);
-t_dlist				*ft_dlstnew(void const *content, size_t c_size, long x, long y);
+t_dlist				*ft_dlstnew(void const *content,
+		size_t c_size, long x, long y);
 void				ft_dlstprint(t_dlist *list);
 void				ft_putlong(long nb);
-void				ft_dlstaddcolumn(t_dlist **list, void *content, size_t c_size);
+void				ft_dlstaddcolumn(t_dlist **list,
+		void *content, size_t c_size);
 long				ft_dlstrowcount(t_dlist *list);
 
 #endif

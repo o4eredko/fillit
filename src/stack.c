@@ -40,24 +40,24 @@ t_dlist	*pop(int stack_type)
 	}
 }
 
-void	create_stack(t_dlist *list, int stack_type)
+void	create_stack(t_dlist *list, int stack_type, int k)
 {
 	long cols;
-    long rows;
+	long rows;
 
 	cols = (ft_dlstgetend(list, X))->cords[X];
 	rows = (ft_dlstgetend(list, Y))->cords[Y];
 	if (!stack_type)
 	{
 		g_del_top = -1;
-		if (!(g_del_stack = (t_dlist **) ft_memalloc(sizeof(t_dlist *)
+		if (!(g_del_stack = (t_dlist **)ft_memalloc(sizeof(t_dlist *)
 				* (cols + rows) * 2)))
 			return ;
 	}
 	else
 	{
 		g_res_top = -1;
-		if (!(g_res_stack = (t_dlist **)ft_memalloc(sizeof(t_dlist *) * rows)))
+		if (!(g_res_stack = (t_dlist **)ft_memalloc(sizeof(t_dlist *) * k)))
 			return ;
 	}
 }

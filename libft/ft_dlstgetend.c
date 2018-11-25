@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-t_dlist	*ft_dlstgetend(t_dlist	*list, char xy)
+t_dlist	*ft_dlstgetend(t_dlist *list, char xy)
 {
 	t_dlist	*head;
 
@@ -24,7 +24,7 @@ t_dlist	*ft_dlstgetend(t_dlist	*list, char xy)
 		while (list->right && list->right->cords[X] > list->cords[X])
 		{
 			if (list->right == head)
-				break;
+				break ;
 			list = list->right;
 		}
 		return (list);

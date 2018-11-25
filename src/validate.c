@@ -10,8 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-/*Delete me*/
-#include <stdio.h>
 #include "fillit.h"
 
 t_shape	*create_node(int fd)
@@ -75,7 +73,6 @@ int		check_shape(char **matrix)
 		j = -1;
 		while (++j < 4)
 		{
-			sides = 0;
 			CHECK_ERR((matrix[i][j] == '.' || matrix[i][j] == '#'));
 			if (matrix[i][j] == '#')
 			{
@@ -109,28 +106,3 @@ t_shape	*validate(int fd)
 	}
 	return (head);
 }
-/*
-int		main(int ac, char **av)
-{
-	int		fd;
-	t_shape	*head;
-
-	if (ac == 2)
-	{
-		if ((fd = open(av[1], 0)) == -1)
-		{
-			printf("Open error\n");
-			return (1);
-		}
-		if (!(head = validate(fd)))
-			printf("error\n");
-		print_list(head);
-		if ((close(fd) == -1))
-		{
-			printf("Close error\n");
-			return (1);
-		}
-	}
-	return (0);
-}
-*/

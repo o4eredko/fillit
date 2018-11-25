@@ -14,8 +14,8 @@
 
 void	ft_dlstaddcolumn(t_dlist **list, void *content, size_t c_size)
 {
-	t_dlist *tmp;
-	long i;
+	t_dlist	*tmp;
+	long	i;
 
 	tmp = ft_dlstgetend(*list, 0);
 	if (!tmp)

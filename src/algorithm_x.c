@@ -12,7 +12,7 @@
 
 #include "fillit.h"
 
-void		reload_matrix(t_dlist **head)
+void	reload_matrix(t_dlist **head)
 {
 	t_dlist *elem;
 
@@ -27,75 +27,64 @@ void		reload_matrix(t_dlist **head)
 	pop(0);
 }
 
+void	delete_branch(t_dlist **head, t_dlist *tmp, t_dlist *row_end)
+{
+	t_dlist *tmp1;
+	t_dlist	*col_end;
+
+	while (tmp)
+	{
+		if ((tmp1 = ft_dlstfind(*head, tmp->cords[X], 0)))
+			tmp1 = tmp1->down;
+		col_end = ft_dlstgetend(tmp1, Y);
+		while (tmp1)
+		{
+			delete_row(head, tmp1->cords[Y]);
+			if (tmp1 == col_end)
+				break ;
+			tmp1 = tmp1->down;
+		}
+		delete_col(head, tmp->cords[X]);
+		if (tmp == row_end)
+			break ;
+		tmp = tmp->right;
+	}
+}
 
 int		reduce_matrix(t_dlist **head, t_dlist *row, int k)
 {
 	t_dlist	*tmp;
-	t_dlist	*tmp1;
 	t_dlist	*row_end;
-	t_dlist	*col_end;
 
 	if ((tmp = ft_dlstfind(*head, 0, row->cords[Y])))
 	{
 		tmp = tmp->right;
 		row_end = ft_dlstgetend(tmp, X);
 		push(NULL, 0);
-		while (tmp)
-		{
-			if ((tmp1 = ft_dlstfind(*head, tmp->cords[X], 0)))
-				tmp1 = tmp1->down;
-			col_end = ft_dlstgetend(tmp1, Y);
-			while (tmp1)
-			{
-				delete_row(head, tmp1->cords[Y]);
-				if (tmp1 == col_end)
-					break;
-				tmp1 = tmp1->down;
-			}
-			delete_col(head, tmp->cords[X]);
-			if (tmp == row_end)
-				break;
-			tmp = tmp->right;
-		}
+		delete_branch(head, tmp, row_end);
 	}
 	return (algorithm(head, k));
 }
 
-int 			compare_shapes(t_dlist *sh1, t_dlist *sh2)
+int		cmp_shapes(t_dlist *sh1, t_dlist *sh2)
 {
 	sh1 = sh1->right->right;
 	sh2 = sh2->right->right;
-
-	if (sh1->right->cords[X] - sh1->cords[X] == sh2->right->cords[X] - sh2->cords[X]
-	&& sh1->right->right->cords[X] - sh1->cords[X] == sh2->right->right->cords[X] - sh2->cords[X]
-	&& sh1->right->right->right->cords[X] - sh1->cords[X] == sh2->right->right->right->cords[X] - sh2->cords[X])
+	if (sh1->right->cords[X] - sh1->cords[X]
+		== sh2->right->cords[X] - sh2->cords[X]
+	&& sh1->right->right->cords[X] - sh1->cords[X]
+		== sh2->right->right->cords[X] - sh2->cords[X]
+	&& sh1->right->right->right->cords[X] - sh1->cords[X]
+		== sh2->right->right->right->cords[X] - sh2->cords[X])
 		return (1);
 	return (0);
 }
 
-int 			count_empty_cols(t_dlist *head)
-{
-	int counter;
-
-	counter = 0;
-	head = head->right;
-	while (head && head->c_size == sizeof(char))
-		head = head->right;
-	while (head)
-	{
-		counter++;
-		head = head->right;
-	}
-	return (counter);
-}
-
-int				algorithm(t_dlist **head, int num_of_tetriminos)
+int		algorithm(t_dlist **head, int num_of_tetriminos)
 {
 	t_dlist	*pivot;
 	int		res;
 
-//	if (g_counter++ > 2000000)
-//		return (-1);
 	res = 0;
 	if ((pivot = (*head)->right))
 	{
@@ -105,17 +94,16 @@ int				algorithm(t_dlist **head, int num_of_tetriminos)
 			push(ft_dlstfind(*head, 0, pivot->cords[Y]), 1);
 			if (!(res = reduce_matrix(head, pivot, num_of_tetriminos)))
 			{
-				if (g_res_top > 0 && compare_shapes(g_res_stack[g_res_top - 1], g_res_stack[g_res_top]))
-				{
-					pop(1);
-					reload_matrix(head);
-					return (0);
-				}
+//				if (g_res_top > 0 &&
+//				cmp_shapes(g_res_stack[g_res_top - 1], g_res_stack[g_res_top]))
+//				{
+//					pop(1);
+//					reload_matrix(head);
+//					return (0);
+//				}
 				pop(1);
 			}
 			reload_matrix(head);
-			if (res == -1)
-				return (-1);
 		}
 	}
 	return (g_res_top == num_of_tetriminos - 1);

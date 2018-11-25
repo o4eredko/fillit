@@ -12,15 +12,26 @@
 
 NAME = fillit
 
-SRC = src/*.c *.c
+SRC = main.c algorithm_x.c create_matrix.c delete_restore.c\
+    fill_cords.c print_functions.c row_col_functions.c\
+    set_dlist.c stack.c validate.c
 
-OBJ = *.o
+OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
 
 $(NAME):
 	make -C libft/
-	gcc -c $(SRC)
+	gcc -c src/main.c
+	gcc -c src/algorithm_x.c
+	gcc -c src/create_matrix.c
+	gcc -c src/delete_restore.c
+	gcc -c src/fill_cords.c
+	gcc -c src/print_functions.c
+	gcc -c src/row_col_functions.c
+	gcc -c src/set_dlist.c
+	gcc -c src/stack.c
+	gcc -c src/validate.c
 	gcc -o $(NAME) $(OBJ) -L libft/ -lft
 
 clean:
@@ -41,4 +52,4 @@ run: re
 
 run2: re
 	clear
-	./$(NAME) test.txt
+	./$(NAME) test.fillit

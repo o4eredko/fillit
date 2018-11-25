@@ -21,18 +21,19 @@ void	print_spaces(long count)
 		ft_putchar(' ');
 }
 
-size_t		print_size(t_dlist *elem)
+size_t	print_size(t_dlist *elem)
 {
-	size_t i;
-	long j;
-	long res;
+	size_t	i;
+	long	j;
+	long	res;
 
 	i = 1;
 	j = 1;
 	res = *(long*)elem->content;
 	if (elem->c_size == sizeof(long))
 	{
-		while (res / j > 9) {
+		while (res / j > 9)
+		{
 			i++;
 			j *= 10;
 		}
@@ -71,10 +72,10 @@ void	print_elem(size_t size, t_dlist *elem)
 
 void	ft_dlstprint(t_dlist *list)
 {
-	t_dlist *tmp;
-	t_dlist *tmp1;
-	long i;
-	long j;
+	t_dlist	*tmp;
+	t_dlist	*tmp1;
+	long	i;
+	long	j;
 
 	if (!list)
 	{
@@ -92,7 +93,8 @@ void	ft_dlstprint(t_dlist *list)
 		{
 			if ((tmp1 = tmp->down))
 			{
-				while (tmp1 && tmp1->down && tmp1->down->cords[Y] > tmp1->cords[Y] && tmp1->cords[Y] < i)
+				while (tmp1 && tmp1->down && tmp1->down->cords[Y] > tmp1->cords[Y]
+					&& tmp1->cords[Y] < i)
 					tmp1 = tmp1->down;
 				if (tmp1 && tmp1->cords[Y] == i)
 					print_elem(print_size(tmp), tmp1);

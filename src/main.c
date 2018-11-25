@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include "src/fillit.h"
-#include "libft/libft.h"
+#include "fillit.h"
+#include "../libft/libft.h"
 #include <sys/time.h>
 
 void	del_elem(t_dlist **elem)
@@ -62,8 +62,8 @@ int 	main(int ac, char **av)
 
 	gettimeofday(&tv1, NULL);
 
-	fd = open("../test.fillit", 0);
-//	fd = open(av[1], 0);
+//	fd = open("../test.fillit", 0);
+	fd = open(av[1], 0);
 	if (!(elem = validate(fd)))
 	{
 		printf("error\n");
@@ -81,9 +81,9 @@ int 	main(int ac, char **av)
 		map_size++;
 	}
 	if (!g_res_stack)
-		create_stack(list, 1);
+		create_stack(list, 1, num_of_tetriminos);
 	if (!g_del_stack)
-		create_stack(list, 0);
+		create_stack(list, 0, 0);
 	while (algorithm(&list, num_of_tetriminos) <= 0)
 	{
 		del_matrix(&list);
@@ -91,14 +91,14 @@ int 	main(int ac, char **av)
 		g_res_top = -1;
 		g_counter = 0;
 	}
-	ft_putstr("\n\n");
-	print_stack(list, 1, num_of_tetriminos);
+//	ft_putstr("\n\n");
+//	print_stack(list, 1, num_of_tetriminos);
     print_map(list, create_matrix(map_size), map_size, num_of_tetriminos);
 
 	gettimeofday(&tv2, NULL);
 
-	printf ("\nTotal time = %f seconds\n",
-			(double) (tv2.tv_usec - tv1.tv_usec) / 1000000 +
-			(double) (tv2.tv_sec - tv1.tv_sec));
+//	printf ("\nTotal time = %f seconds\n",
+//			(double) (tv2.tv_usec - tv1.tv_usec) / 1000000 +
+//			(double) (tv2.tv_sec - tv1.tv_sec));
  	return (0);
 }
