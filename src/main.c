@@ -70,11 +70,12 @@ int 	main(int ac, char **av)
 		return (1);
 	}
 	close(fd);
-	g_counter = 0;
+//	g_counter = 0;
 	cords = lstmap(elem, &fill_cords);
 	num_of_tetriminos = ft_clstcount(cords);
 	map_size = ft_sqrt(4 * num_of_tetriminos);
-	g_empty = map_size * map_size - num_of_tetriminos * 4;
+	if (!(4 * num_of_tetriminos - map_size * map_size))
+		map_size++;
     while (!set_dlist(cords, &list, map_size))
 	{
 		del_matrix(&list);
@@ -89,7 +90,7 @@ int 	main(int ac, char **av)
 		del_matrix(&list);
 		set_dlist(cords, &list, ++map_size);
 		g_res_top = -1;
-		g_counter = 0;
+//		g_counter = 0;
 	}
 //	ft_putstr("\n\n");
 //	print_stack(list, 1, num_of_tetriminos);
@@ -97,8 +98,8 @@ int 	main(int ac, char **av)
 
 	gettimeofday(&tv2, NULL);
 
-//	printf ("\nTotal time = %f seconds\n",
-//			(double) (tv2.tv_usec - tv1.tv_usec) / 1000000 +
-//			(double) (tv2.tv_sec - tv1.tv_sec));
+	printf ("\nTotal time = %f seconds\n",
+			(double) (tv2.tv_usec - tv1.tv_usec) / 1000000 +
+			(double) (tv2.tv_sec - tv1.tv_sec));
  	return (0);
 }
