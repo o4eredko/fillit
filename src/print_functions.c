@@ -17,6 +17,26 @@ void	print_usage()
 	ft_putendl("usage: ./fillit soruse_file");
 }
 
+int 	check_smaller_square(char **map, int size)
+{
+	int i;
+	int j;
+	int res;
+
+	res = 1;
+	i = -1;
+	j =  size - 1;
+	while (++i < size)
+		if (map[i][j] != '.')
+			res = 0;
+	j = -1;
+	i--;
+	while (++j < size)
+		if (map[i][j] != '.')
+			res = 0;
+	return (res);
+}
+
 void	print_map(t_dlist *head, char **map, int size, int k)
 {
 	long	x;
@@ -34,10 +54,14 @@ void	print_map(t_dlist *head, char **map, int size, int k)
 			row = row->right;
 		}
 	}
-	x = -1;
-	while (++x < size)
+	y = -1;
+	if (check_smaller_square(map, size))
+		size--;
+	while (++y < size)
 	{
-		ft_putstr(map[x]);
+		x = 0;
+		while (++x < size)
+			ft_putchar(map[y][x]);
 		ft_putchar('\n');
 	}
 }
