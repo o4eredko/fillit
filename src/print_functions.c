@@ -14,7 +14,7 @@
 
 void	print_usage()
 {
-	ft_putendl("usage: ./fillit soruse_file");
+	ft_putendl("usage: fillit soruse_file\n");
 }
 
 int 	check_smaller_square(char **map, int size)

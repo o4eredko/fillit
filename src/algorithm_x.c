@@ -93,16 +93,7 @@ int		algorithm(t_dlist **head, int num_of_tetriminos)
 			pivot = pivot->down;
 			push(ft_dlstfind(*head, 0, pivot->cords[Y]), 1);
 			if (!(res = reduce_matrix(head, pivot, num_of_tetriminos)))
-			{
-				if (g_res_top > 0 &&
-				cmp_shapes(g_res_stack[g_res_top - 1], g_res_stack[g_res_top]))
-				{
-					pop(1);
-					reload_matrix(head);
-					return (0);
-				}
 				pop(1);
-			}
 			reload_matrix(head);
 		}
 	}
