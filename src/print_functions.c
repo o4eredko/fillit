@@ -55,13 +55,9 @@ void	print_map(t_dlist *head, char **map, int size, int k)
 		}
 	}
 	y = -1;
-	if (check_smaller_square(map, size))
-		size--;
 	while (++y < size)
 	{
-		x = 0;
-		while (++x < size)
-			ft_putchar(map[y][x]);
+		ft_putstr(map[y]);
 		ft_putchar('\n');
 	}
 }
