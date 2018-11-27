@@ -60,7 +60,4 @@ t_cords				*fill_cords(t_shape *elem);
 void				print_map(t_dlist *head, char **map, int size, int k);
 char				**create_matrix(int start_size);
 void				move_cords(int **cords, int xy, int length);
-void				print_list(t_shape *head);
-void				print_cords(t_cords *head);
-void				print_stack(t_dlist *head, int stack_type, int k);
 #endif
