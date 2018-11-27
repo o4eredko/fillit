@@ -39,6 +39,8 @@ static char		*read_file(char *res, t_gnl *gnl)
 		if (gnl->i < gnl->r_size)
 			break ;
 	}
+	if (!gnl->r_size)
+		return (NULL);
 	return (res);
 }
 
