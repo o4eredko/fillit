@@ -14,7 +14,7 @@
 
 void	print_usage(void)
 {
-	ft_putendl("usage: fillit source_file");
+	ft_putendl("usage: fillit source_file\n");
 }
 
 void	print_map(t_dlist *head, char **map, int size, int k)
