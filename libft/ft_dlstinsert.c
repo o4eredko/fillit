@@ -6,7 +6,7 @@
 /*   By: dmatseku <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/16 10:38:11 by dmatseku          #+#    #+#             */
-/*   Updated: 2018/11/16 10:38:12 by dmatseku         ###   ########.fr       */
+/*   Updated: 2018/11/26 20:50:54 by dmatseku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,25 +80,22 @@ static int		ft_insert2(t_dlist **list, t_dlist *elem)
 		tmp_elem = create_row(list, elem->cords[Y]);
 	if (!tmp_elem->right)
 		tmp_elem->right = elem;
+	return (1);
+	while (tmp_elem->right && tmp_elem->right->cords[X] > tmp_elem->cords[X]
+			&& tmp_elem->right->cords[X] <= elem->cords[X])
+	{
+		CHECK((tmp_elem->right->cords[X] != elem->cords[X]));
+		tmp_elem = tmp_elem->right;
+	}
+	if (!(elem->right = tmp_elem->right))
+		ft_dlstrelink(&elem, &tmp_elem, X);
 	else
 	{
-		while (tmp_elem->right && tmp_elem->right->cords[X] > tmp_elem->cords[X]
-			&& tmp_elem->right->cords[X] <= elem->cords[X])
-		{
-			CHECK((tmp_elem->right->cords[X] != elem->cords[X]));
-			tmp_elem = tmp_elem->right;
-		}
-		if (!(elem->right = tmp_elem->right))
-			ft_dlstrelink(&elem, &tmp_elem, X);
-		else
-		{
-			elem->left = (tmp_elem->right->left)
-					? tmp_elem->right->left : tmp_elem->right;
-			elem->right->left = elem;
-			elem->left->right = elem;
-			if (!tmp_elem->cords[X])
-				tmp_elem->right = elem;
-		}
+		elem->left = (tmp_elem->right->left)
+			? tmp_elem->right->left : tmp_elem->right;
+		elem->right->left = elem;
+		elem->left->right = elem;
+		tmp_elem->right = (!tmp_elem->cords[X]) ? elem : tmp_elem->right;
 	}
 	return (1);
 }
@@ -111,25 +108,22 @@ int				ft_dlstinsert(t_dlist **list, t_dlist *elem)
 		tmp_elem = create_column(list, elem->cords[X]);
 	if (!tmp_elem->down)
 		tmp_elem->down = elem;
+	return (ft_insert2(list, elem));
+	while (tmp_elem->down && tmp_elem->down->cords[Y] > tmp_elem->cords[Y]
+			&& tmp_elem->down->cords[Y] <= elem->cords[Y])
+	{
+		CHECK((tmp_elem->down->cords[Y] != elem->cords[Y]));
+		tmp_elem = tmp_elem->down;
+	}
+	if (!(elem->down = tmp_elem->down))
+		ft_dlstrelink(&elem, &tmp_elem, Y);
 	else
 	{
-		while (tmp_elem->down && tmp_elem->down->cords[Y] > tmp_elem->cords[Y]
-			&& tmp_elem->down->cords[Y] <= elem->cords[Y])
-		{
-			CHECK((tmp_elem->down->cords[Y] != elem->cords[Y]));
-			tmp_elem = tmp_elem->down;
-		}
-		if (!(elem->down = tmp_elem->down))
-			ft_dlstrelink(&elem, &tmp_elem, Y);
-		else
-		{
-			elem->up = (tmp_elem->down->up)
-					? tmp_elem->down->up : tmp_elem->down;
-			elem->down->up = elem;
-			elem->up->down = elem;
-			if (!tmp_elem->cords[Y])
-				tmp_elem->down = elem;
-		}
+		elem->up = (tmp_elem->down->up)
+			? tmp_elem->down->up : tmp_elem->down;
+		elem->down->up = elem;
+		elem->up->down = elem;
+		tmp_elem->down = (!tmp_elem->cords[Y]) ? elem : tmp_elem->down;
 	}
 	return (ft_insert2(list, elem));
 }

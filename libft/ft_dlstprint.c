@@ -6,20 +6,11 @@
 /*   By: dmatseku <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/16 13:11:24 by dmatseku          #+#    #+#             */
-/*   Updated: 2018/11/16 13:11:25 by dmatseku         ###   ########.fr       */
+/*   Updated: 2018/11/26 18:22:55 by dmatseku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-void	print_spaces(long count)
-{
-	long i;
-
-	i = -1;
-	while (++i < count)
-		ft_putchar(' ');
-}
 
 size_t	print_size(t_dlist *elem)
 {
@@ -62,12 +53,34 @@ void	print_header(t_dlist *tmp)
 
 void	print_elem(size_t size, t_dlist *elem)
 {
-	size_t count;
+	size_t	count;
+	long	i;
 
 	count = elem ? size : size + 1;
 	if (elem)
 		ft_putchar('1');
-	print_spaces(count);
+	i = -1;
+	while (++i < count)
+		ft_putchar(' ');
+}
+
+void	ft_module(t_dlist *tmp, long i)
+{
+	t_dlist *tmp1;
+
+	while ((tmp = tmp->right))
+	{
+		if ((tmp1 = tmp->down))
+		{
+			while (tmp1 && tmp1->down && tmp1->down->cords[Y] > tmp1->cords[Y]
+					&& tmp1->cords[Y] < i)
+				tmp1 = tmp1->down;
+			if (tmp1 && tmp1->cords[Y] == i)
+				print_elem(print_size(tmp), tmp1);
+		}
+		if (!tmp->down || (tmp1 && i != tmp1->cords[Y]))
+			print_elem(print_size(tmp), 0);
+	}
 }
 
 void	ft_dlstprint(t_dlist *list)
@@ -89,18 +102,6 @@ void	ft_dlstprint(t_dlist *list)
 	{
 		ft_putchar('\n');
 		tmp = list;
-		while ((tmp = tmp->right))
-		{
-			if ((tmp1 = tmp->down))
-			{
-				while (tmp1 && tmp1->down && tmp1->down->cords[Y] > tmp1->cords[Y]
-					&& tmp1->cords[Y] < i)
-					tmp1 = tmp1->down;
-				if (tmp1 && tmp1->cords[Y] == i)
-					print_elem(print_size(tmp), tmp1);
-			}
-			if (!tmp->down || (tmp1 && i != tmp1->cords[Y]))
-				print_elem(print_size(tmp), 0);
-		}
+		ft_module(tmp, i);
 	}
 }
