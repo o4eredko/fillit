@@ -66,20 +66,6 @@ int		reduce_matrix(t_dlist **head, t_dlist *row, int k)
 	return (algorithm(head, k));
 }
 
-int		cmp_shapes(t_dlist *sh1, t_dlist *sh2)
-{
-	sh1 = sh1->right->right;
-	sh2 = sh2->right->right;
-	if (sh1->right->cords[X] - sh1->cords[X]
-		== sh2->right->cords[X] - sh2->cords[X]
-	&& sh1->right->right->cords[X] - sh1->cords[X]
-		== sh2->right->right->cords[X] - sh2->cords[X]
-	&& sh1->right->right->right->cords[X] - sh1->cords[X]
-		== sh2->right->right->right->cords[X] - sh2->cords[X])
-		return (1);
-	return (0);
-}
-
 int		algorithm(t_dlist **head, int num_of_tetriminos)
 {
 	t_dlist	*pivot;
