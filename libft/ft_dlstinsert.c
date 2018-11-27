@@ -12,21 +12,21 @@
 
 #include "libft.h"
 
-static void		ft_dlstrelink(t_dlist **elem, t_dlist **tmp_elem, int xy)
+static void		ft_dlstrelink(t_dlist **elem, t_dlist **tmp, int xy)
 {
 	if (!xy)
 	{
-		(*elem)->right = *tmp_elem;
-		(*elem)->left = *tmp_elem;
-		(*tmp_elem)->right = *elem;
-		(*tmp_elem)->left = *elem;
+		(*elem)->right = *tmp;
+		(*elem)->left = *tmp;
+		(*tmp)->right = *elem;
+		(*tmp)->left = *elem;
 	}
 	else
 	{
-		(*elem)->down = *tmp_elem;
-		(*elem)->up = *tmp_elem;
-		(*tmp_elem)->down = *elem;
-		(*tmp_elem)->up = *elem;
+		(*elem)->down = *tmp;
+		(*elem)->up = *tmp;
+		(*tmp)->down = *elem;
+		(*tmp)->up = *elem;
 	}
 }
 
@@ -72,58 +72,60 @@ static t_dlist	*create_row(t_dlist **list, long y)
 	return (tmp);
 }
 
-static int		ft_insert2(t_dlist **list, t_dlist *elem)
+int				ft_insert2(t_dlist **list, t_dlist *elem)
 {
-	t_dlist *tmp_elem;
+	t_dlist *tmp;
 
-	if (!(tmp_elem = ft_dlstfind(*list, 0, elem->cords[Y])))
-		tmp_elem = create_row(list, elem->cords[Y]);
-	if (!tmp_elem->right)
-		tmp_elem->right = elem;
-	return (1);
-	while (tmp_elem->right && tmp_elem->right->cords[X] > tmp_elem->cords[X]
-			&& tmp_elem->right->cords[X] <= elem->cords[X])
-	{
-		CHECK((tmp_elem->right->cords[X] != elem->cords[X]));
-		tmp_elem = tmp_elem->right;
-	}
-	if (!(elem->right = tmp_elem->right))
-		ft_dlstrelink(&elem, &tmp_elem, X);
+	if (!(tmp = ft_dlstfind(*list, 0, elem->cords[Y])))
+		tmp = create_row(list, elem->cords[Y]);
+	if (!tmp->right)
+		tmp->right = elem;
 	else
 	{
-		elem->left = (tmp_elem->right->left)
-			? tmp_elem->right->left : tmp_elem->right;
-		elem->right->left = elem;
-		elem->left->right = elem;
-		tmp_elem->right = (!tmp_elem->cords[X]) ? elem : tmp_elem->right;
+		while (tmp->right && tmp->right->cords[X] > tmp->cords[X]
+			&& tmp->right->cords[X] <= elem->cords[X])
+		{
+			CHECK((tmp->right->cords[X] != elem->cords[X]));
+			tmp = tmp->right;
+		}
+		if (!(elem->right = tmp->right))
+			ft_dlstrelink(&elem, &tmp, X);
+		else
+		{
+			elem->left = (tmp->right->left) ? tmp->right->left : tmp->right;
+			elem->right->left = elem;
+			elem->left->right = elem;
+			tmp->right = tmp->cords[X] ? tmp->right : elem;
+		}
 	}
 	return (1);
 }
 
 int				ft_dlstinsert(t_dlist **list, t_dlist *elem)
 {
-	t_dlist *tmp_elem;
+	t_dlist *tmp;
 
-	if (!(tmp_elem = ft_dlstfind(*list, elem->cords[X], 0)))
-		tmp_elem = create_column(list, elem->cords[X]);
-	if (!tmp_elem->down)
-		tmp_elem->down = elem;
-	return (ft_insert2(list, elem));
-	while (tmp_elem->down && tmp_elem->down->cords[Y] > tmp_elem->cords[Y]
-			&& tmp_elem->down->cords[Y] <= elem->cords[Y])
-	{
-		CHECK((tmp_elem->down->cords[Y] != elem->cords[Y]));
-		tmp_elem = tmp_elem->down;
-	}
-	if (!(elem->down = tmp_elem->down))
-		ft_dlstrelink(&elem, &tmp_elem, Y);
+	if (!(tmp = ft_dlstfind(*list, elem->cords[X], 0)))
+		tmp = create_column(list, elem->cords[X]);
+	if (!tmp->down)
+		tmp->down = elem;
 	else
 	{
-		elem->up = (tmp_elem->down->up)
-			? tmp_elem->down->up : tmp_elem->down;
-		elem->down->up = elem;
-		elem->up->down = elem;
-		tmp_elem->down = (!tmp_elem->cords[Y]) ? elem : tmp_elem->down;
+		while (tmp->down && tmp->down->cords[Y] > tmp->cords[Y]
+			&& tmp->down->cords[Y] <= elem->cords[Y])
+		{
+			CHECK((tmp->down->cords[Y] != elem->cords[Y]));
+			tmp = tmp->down;
+		}
+		if (!(elem->down = tmp->down))
+			ft_dlstrelink(&elem, &tmp, Y);
+		else
+		{
+			elem->up = (tmp->down->up) ? tmp->down->up : tmp->down;
+			elem->down->up = elem;
+			elem->up->down = elem;
+			tmp->down = tmp->cords[Y] ? tmp->down : elem;
+		}
 	}
 	return (ft_insert2(list, elem));
 }

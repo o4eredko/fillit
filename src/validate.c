@@ -104,8 +104,5 @@ t_shape	*validate(int fd)
 		CHECK_ERR((node->next = create_node(fd)));
 		CHECK_ERR(check_shape(node->next->matrix));
 	}
-	if (!read(fd, 0, 1) == 0)
-		return (0);
-	else
-		return (head);
+	return (head);
 }
