@@ -120,12 +120,12 @@ int			set_dlist(t_cords *cords, t_dlist **list, int length)
 	j = -1;
 	tmp_cords = cords;
 	while (tmp_cords)
-    {
-	    if (get_cords(tmp_cords->cords, X, 0, length) >= length
-	    || get_cords(tmp_cords->cords, Y, 0, length) >= length)
-            return (0);
-	    tmp_cords = tmp_cords->next;
-    }
+	{
+		if (get_cords(tmp_cords->cords, X, 0, length) >= length
+			|| get_cords(tmp_cords->cords, Y, 0, length) >= length)
+			return (0);
+		tmp_cords = tmp_cords->next;
+	}
 	ft_dlstaddcolumn(list, 0, 0);
 	while (++j < i)
 	{
