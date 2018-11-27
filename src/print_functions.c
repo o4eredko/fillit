@@ -25,7 +25,7 @@ void	print_map(t_dlist *head, char **map, int size, int k)
 
 	while (g_res_top != -1)
 	{
-		row = (ft_dlstfind(head, 0, (pop(1))->cords[Y]))->right->right;
+		row = (pop(1))->right->right;
 		while (row && row->left->cords[X] < row->cords[X])
 		{
 			x = ft_atoi(ft_dlstgetn(head, row->cords[X], X)->content);

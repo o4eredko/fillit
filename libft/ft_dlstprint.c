@@ -12,19 +12,27 @@
 
 #include "libft.h"
 
-size_t	print_size(t_dlist *elem)
+void	print_spaces(long count)
 {
-	size_t	i;
-	long	j;
-	long	res;
+	long i;
+
+	i = -1;
+	while (++i < count)
+		ft_putchar(' ');
+}
+
+size_t		print_size(t_dlist *elem)
+{
+	size_t i;
+	long j;
+	long res;
 
 	i = 1;
 	j = 1;
 	res = *(long*)elem->content;
 	if (elem->c_size == sizeof(long))
 	{
-		while (res / j > 9)
-		{
+		while (res / j > 9) {
 			i++;
 			j *= 10;
 		}
@@ -53,42 +61,20 @@ void	print_header(t_dlist *tmp)
 
 void	print_elem(size_t size, t_dlist *elem)
 {
-	size_t	count;
-	long	i;
+	size_t count;
 
 	count = elem ? size : size + 1;
 	if (elem)
 		ft_putchar('1');
-	i = -1;
-	while (++i < count)
-		ft_putchar(' ');
-}
-
-void	ft_module(t_dlist *tmp, long i)
-{
-	t_dlist *tmp1;
-
-	while ((tmp = tmp->right))
-	{
-		if ((tmp1 = tmp->down))
-		{
-			while (tmp1 && tmp1->down && tmp1->down->cords[Y] > tmp1->cords[Y]
-					&& tmp1->cords[Y] < i)
-				tmp1 = tmp1->down;
-			if (tmp1 && tmp1->cords[Y] == i)
-				print_elem(print_size(tmp), tmp1);
-		}
-		if (!tmp->down || (tmp1 && i != tmp1->cords[Y]))
-			print_elem(print_size(tmp), 0);
-	}
+	print_spaces(count);
 }
 
 void	ft_dlstprint(t_dlist *list)
 {
-	t_dlist	*tmp;
-	t_dlist	*tmp1;
-	long	i;
-	long	j;
+	t_dlist *tmp;
+	t_dlist *tmp1;
+	long i;
+	long j;
 
 	if (!list)
 	{
@@ -102,6 +88,17 @@ void	ft_dlstprint(t_dlist *list)
 	{
 		ft_putchar('\n');
 		tmp = list;
-		ft_module(tmp, i);
+		while ((tmp = tmp->right))
+		{
+			if ((tmp1 = tmp->down))
+			{
+				while (tmp1 && tmp1->down && tmp1->down->cords[Y] > tmp1->cords[Y] && tmp1->cords[Y] < i)
+					tmp1 = tmp1->down;
+				if (tmp1 && tmp1->cords[Y] == i)
+					print_elem(print_size(tmp), tmp1);
+			}
+			if (!tmp->down || (tmp1 && i != tmp1->cords[Y]))
+				print_elem(print_size(tmp), 0);
+		}
 	}
 }
