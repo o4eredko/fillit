@@ -12,20 +12,7 @@
 
 #include "fillit.h"
 
-int		ft_clstcount(t_cords *cords)
-{
-	int i;
-
-	i = 0;
-	while (cords)
-	{
-		i++;
-		cords = cords->next;
-	}
-	return (i);
-}
-
-int		get_cords(int **cords, int xy, int bs, int length)
+int			get_cords(int **cords, int xy, int bs, int length)
 {
 	int res;
 	int i;
@@ -68,43 +55,39 @@ static void	move_cords_l(int **cords, int length)
 			cords[i][1]++;
 }
 
-void	set_cords(int **cords, t_dlist **list, int count, int nb, int length)
+void		set_cords(t_cords *cords, t_dlist **list, int count, int length)
 {
-	long i;
-	long j;
+	long	i;
+	long	j;
+	int		icount;
 
-	i = ft_dlstrowcount(*list) + 1;
-	while (get_cords(cords, 1, 0, length) <= length - 1)
+	icount = -1;
+	while (++icount < count)
 	{
-		ft_dlstinsert(list, ft_dlstnew(0, 0, nb, i));
-		j = -1;
-		while (++j < 4)
-			ft_dlstinsert(list, ft_dlstnew(0, 0, count + (cords[j][0] + 1 + length * (cords[j][1])), i));
-		move_cords_l(cords, length);
-		i++;
+		i = ft_dlstrowcount(*list) + 1;
+		while (get_cords(cords->cords, 1, 0, length) <= length - 1)
+		{
+			ft_dlstinsert(list, ft_dlstnew(0, 0, icount + 1, i));
+			j = -1;
+			while (++j < 4)
+				ft_dlstinsert(list, ft_dlstnew(0, 0, count +
+				(cords->cords[j][0] + 1 + length * (cords->cords[j][1])), i));
+			move_cords_l(cords->cords, length);
+			i++;
+		}
+		move_cords(cords->cords, X, length);
+		cords = cords->next;
 	}
-	move_cords(cords, X, length);
 }
 
-static int	set_row(t_dlist *list, int length, int count)
+int			check_cords(t_cords *tmp_cords, int length)
 {
-	int i;
-	int j;
-
-	i = 1;
-	while (count-- >= 0)
-		list = list->right;
-	while (i <= length)
+	while (tmp_cords)
 	{
-		j = 1;
-		while (j <= length)
-		{
-			list->content = ft_strjoin(ft_strjoin(ft_itoa(j), ":"), ft_itoa(i));
-			list->c_size = ft_strlen((char*)list->content);
-			j++;
-			list = list->right;
-		}
-		i++;
+		if (get_cords(tmp_cords->cords, X, 0, length) >= length
+			|| get_cords(tmp_cords->cords, Y, 0, length) >= length)
+			return (0);
+		tmp_cords = tmp_cords->next;
 	}
 	return (1);
 }
@@ -114,18 +97,10 @@ int			set_dlist(t_cords *cords, t_dlist **list, int length)
 	int i;
 	int j;
 	int c1;
-	t_cords *tmp_cords;
 
 	i = ft_clstcount(cords);
 	j = -1;
-	tmp_cords = cords;
-	while (tmp_cords)
-	{
-		if (get_cords(tmp_cords->cords, X, 0, length) >= length
-			|| get_cords(tmp_cords->cords, Y, 0, length) >= length)
-			return (0);
-		tmp_cords = tmp_cords->next;
-	}
+	CHECK(check_cords(cords, length));
 	ft_dlstaddcolumn(list, 0, 0);
 	while (++j < i)
 	{
@@ -135,12 +110,7 @@ int			set_dlist(t_cords *cords, t_dlist **list, int length)
 	j = -1;
 	while (++j < length * length)
 		ft_dlstaddcolumn(list, 0, 0);
-	j = -1;
-	while (++j < i)
-	{
-		set_cords(cords->cords, list, i, j + 1, length);
-		cords = cords->next;
-	}
-	CHECK((set_row(*list, length, i)));
+	set_cords(cords, list, i, length);
+	set_row(*list, length, i);
 	return (1);
 }

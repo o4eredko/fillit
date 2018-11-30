@@ -49,23 +49,15 @@ int		adjacent(char **matrix, int i, int j)
 	return (sides);
 }
 
-int		check_square(char **matrix, int i, int j)
-{
-	if (i == 0 || j == 0)
-		return (0);
-	if (matrix[i][j - 1] == '#' && matrix[i - 1][j] == '#'
-		&& matrix[i - 1][j - 1] == '#')
-		return (6);
-	return (0);
-}
-
 int		check_shape(char **matrix)
 {
 	int i;
 	int j;
 	int sides;
 	int res;
+	int	counter;
 
+	counter = 0;
 	res = 0;
 	i = -1;
 	while (++i < 4)
@@ -76,15 +68,14 @@ int		check_shape(char **matrix)
 			CHECK_ERR((matrix[i][j] == '.' || matrix[i][j] == '#'));
 			if (matrix[i][j] == '#')
 			{
+				counter++;
 				sides = adjacent(matrix, i, j);
 				CHECK_ERR((sides >= 1 && sides <= 3));
 				res += sides;
-				if (res == 8)
-					CHECK_ERR((res = check_square(matrix, i, j)));
 			}
 		}
 	}
-	return (res == 6);
+	return ((res == 6 || res == 8) && counter == 4);
 }
 
 t_shape	*validate(int fd)

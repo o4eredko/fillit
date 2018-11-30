@@ -14,10 +14,11 @@
 
 void	print_usage(void)
 {
-	ft_putendl("usage: fillit source_file\n");
+	ft_putendl("usage: fillit source_file");
+	exit(1);
 }
 
-void	print_map(t_dlist *head, char **map, int size, int k)
+void	print_map(t_dlist *head, char **map, int size)
 {
 	long	x;
 	long	y;
@@ -40,5 +41,6 @@ void	print_map(t_dlist *head, char **map, int size, int k)
 	{
 		ft_putstr(map[y]);
 		ft_putchar('\n');
+		free(map[y]);
 	}
 }

@@ -115,5 +115,6 @@ void				ft_putlong(long nb);
 void				ft_dlstaddcolumn(t_dlist **list,
 		void *content, size_t c_size);
 long				ft_dlstrowcount(t_dlist *list);
+void				ft_dlstprint(t_dlist *list);
 
 #endif

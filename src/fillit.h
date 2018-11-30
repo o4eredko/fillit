@@ -15,8 +15,8 @@
 
 # include <fcntl.h>
 # include <unistd.h>
-# include "../libft/get_next_line.h"
-# include "../libft/libft.h"
+# include <get_next_line.h>
+# include <libft.h>
 # define CHECK_ERR(x) if (!x)return (0)
 # define X 0
 # define Y 1
@@ -57,7 +57,12 @@ t_dlist				*pop(int stack_type);
 int					set_dlist(t_cords *cords, t_dlist **list, int length);
 t_cords				*lstmap(t_shape *lst, t_cords *(*f)(t_shape *elem));
 t_cords				*fill_cords(t_shape *elem);
-void				print_map(t_dlist *head, char **map, int size, int k);
+void				print_map(t_dlist *head, char **map, int size);
 char				**create_matrix(int start_size);
 void				move_cords(int **cords, int xy, int length);
+void				set_row(t_dlist *list, int length, int count);
+void				del_matrix(t_dlist **head);
+void				free_memory(t_dlist **list, t_cords **cords);
+void				del_shape_list(t_shape **shape);
+
 #endif

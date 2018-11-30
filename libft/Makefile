@@ -6,7 +6,7 @@
 #    By: dmatseku <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/24 13:52:08 by dmatseku          #+#    #+#              #
-#    Updated: 2018/10/31 15:48:48 by dmatseku         ###   ########.fr        #
+#    Updated: 2018/11/27 13:13:57 by yochered         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,9 +27,11 @@ SRC = ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memmove.c ft_memchr.c\
 
 LIB = $(SRC:.c=.o)
 
-$(NAME):
-	gcc -c -Wall -Wextra -Werror $(SRC)
+$(NAME): $(LIB)
 	ar rc $(NAME) $(LIB)
+
+%.o: %.c
+	gcc -Wall -W -Werror -c -o $@ $<
 
 all: $(NAME)
 

@@ -6,50 +6,50 @@
 #    By: yochered <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/08 11:16:16 by yochered          #+#    #+#              #
-#    Updated: 2018/11/08 11:16:17 by yochered         ###   ########.fr        #
+#    Updated: 2018/11/27 13:14:25 by yochered         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fillit
-
-SRC = main.c algorithm_x.c create_matrix.c delete_restore.c\
-    fill_cords.c print_functions.c row_col_functions.c\
-    set_dlist.c stack.c validate.c
-
-OBJ = $(SRC:.c=.o)
+SRC = main.c\
+	algorithm_x.c\
+	create_matrix.c\
+	delete_restore.c\
+    fill_cords.c\
+    print_functions.c\
+    row_col_functions.c\
+    set_dlist.c\
+    set_dlist_module.c\
+    stack.c\
+    validate.c\
+    free_memory.c
+LIBFT = $(LIBDIR)libft.a
+OBJ = $(addprefix $(SRCDIR), $(SRC:.c=.o))
+SRCDIR = ./src/
+LIBDIR = ./libft/
+FLAGS = -c -Wall -W -Werror
 
 all: $(NAME)
 
-$(NAME):
-	make -C libft/
-	gcc -c src/main.c
-	gcc -c src/algorithm_x.c
-	gcc -c src/create_matrix.c
-	gcc -c src/delete_restore.c
-	gcc -c src/fill_cords.c
-	gcc -c src/print_functions.c
-	gcc -c src/row_col_functions.c
-	gcc -c src/set_dlist.c
-	gcc -c src/stack.c
-	gcc -c src/validate.c
-	gcc -o $(NAME) $(OBJ) -L libft/ -lft
+$(NAME): $(LIBFT) $(OBJ)
+	gcc -o $(NAME) $(OBJ) -L $(LIBDIR) -lft -I $(LIBDIR)
+
+$(SRCDIR)%.o: $(SRCDIR)%.c
+	gcc $(FLAGS) -o $@ $< -I $(LIBDIR)
+
+$(LIBFT):
+	@make -C $(LIBDIR) --silent
 
 clean:
-	make -C libft/ clean
-	rm -f $(OBJ)
+	@make -C $(LIBDIR) clean --silent
+	@/bin/rm -f $(OBJ)
 
 fclean: clean
-	rm -f $(NAME)
+	@make -C $(LIBDIR) fclean --silent
+	@/bin/rm -f $(NAME)
 
 re: fclean all
 
 run: re
-	rm test.fillit
-	make -C generator/ re
-	./generator/tetrigen -v -f 5
-	clear
-	./$(NAME) test.fillit
-
-run2: re
 	clear
 	./$(NAME) test.fillit
